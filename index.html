@@ -3,398 +3,596 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
   <title>bTechMistriVaala3D</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Anton&family=Archivo+Black&family=Audiowide&family=Bangers&family=Barlow+Condensed:wght@700;800&family=Bebas+Neue&family=Black+Ops+One&family=Bungee&family=Chakra+Petch:ital,wght@0,700;1,700&family=Cinzel:wght@700;800&family=Exo+2:ital,wght@0,800;1,800&family=Fredoka:wght@700&family=Inter:wght@400;500;600;700;800&family=Kanit:ital,wght@0,800;1,800&family=Lobster&family=Montserrat:wght@700;800;900&family=Orbitron:wght@700;800;900&family=Oswald:wght@700&family=Pacifico&family=Permanent+Marker&family=Rajdhani:wght@700&family=Righteous&family=Russo+One&family=Satisfy&family=Teko:wght@700&family=Titan+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Anton&family=Archivo+Black&family=Audiowide&family=Bangers&family=Barlow+Condensed:wght@700;800&family=Bebas+Neue&family=Black+Ops+One&family=Bungee&family=Chakra+Petch:ital,wght@0,700;1,700&family=Cinzel:wght@700;800&family=Exo+2:ital,wght@0,800;1,800&family=Fredoka:wght@700&family=Inter:wght@400;500;600;700&family=Kanit:ital,wght@0,800;1,800&family=Lobster&family=Montserrat:wght@700;800;900&family=Orbitron:wght@700;800;900&family=Oswald:wght@700&family=Pacifico&family=Permanent+Marker&family=Rajdhani:wght@700&family=Righteous&family=Russo+One&family=Satisfy&family=Teko:wght@700&family=Titan+One&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-app: #080a10;
-      --panel-bg: rgba(12, 16, 25, 0.96);
-      --card-bg: rgba(20, 26, 40, 0.56);
-      --card-hover: rgba(28, 37, 56, 0.85);
-      --border: rgba(255, 255, 255, 0.07);
-      --border-strong: rgba(255, 255, 255, 0.15);
-      --accent: #38bdf8;
-      --accent-2: #10b981;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      color-scheme: light;
+      --bg-stage: #f2f1ed;
+      --bg-panel: #ffffff;
+      --bg-subtle: #f7f6f3;
+      --bg-hover: #efeee9;
+      --border: #e6e4de;
+      --border-focus: #111111;
+      --ink: #111111;
+      --ink-muted: #6e6d68;
+      --ink-soft: #9c9a93;
+      --accent: #111111;
+      --wa-green: #16a34a;
+      --radius-md: 12px;
+      --radius-sm: 8px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-app);
-      color: var(--text-main);
+      background: var(--bg-stage);
+      color: var(--ink);
       height: 100vh;
       display: flex;
       overflow: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Left Customizer Panel */
+    /* Left Minimalist Panel */
     .sidebar {
-      width: 430px;
-      min-width: 380px;
-      background: var(--panel-bg);
-      backdrop-filter: blur(24px);
+      width: 396px;
+      min-width: 360px;
+      background: var(--bg-panel);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       height: 100vh;
       z-index: 20;
-      box-shadow: 16px 0 48px rgba(0, 0, 0, 0.55);
     }
 
     .studio-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
+      padding: 20px 24px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: linear-gradient(180deg, rgba(56, 189, 248, 0.06) 0%, transparent 100%);
     }
 
-    .brand-lockup { display: flex; align-items: center; gap: 11px; }
-    .brand-badge {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: linear-gradient(135deg, #38bdf8, #6366f1);
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900; font-size: 0.9rem; color: #fff;
-      box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35);
+    .brand-lockup h1 {
+      font-size: 1.08rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--ink);
     }
-    .brand-lockup h1 { font-size: 1.02rem; font-weight: 800; letter-spacing: -0.02em; }
-    .brand-lockup p { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; margin-top: 1px; }
+    .brand-lockup p {
+      font-size: 0.74rem;
+      color: var(--ink-muted);
+      margin-top: 2px;
+    }
 
     .live-pill {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: rgba(16, 185, 129, 0.14);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      color: #34d399;
-      font-size: 0.65rem; font-weight: 700;
-      padding: 4px 10px; border-radius: 99px;
-      letter-spacing: 0.03em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 99px;
     }
     .live-dot {
       width: 6px; height: 6px; border-radius: 50%;
-      background: #34d399;
-      box-shadow: 0 0 8px #34d399;
+      background: #16a34a;
     }
 
-    /* 3-Step Clean Navigation */
-    .step-nav {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      padding: 10px 16px; gap: 8px;
+    /* Segmented 3-Step Pill Nav */
+    .step-nav-wrap {
+      padding: 0 24px 16px;
       border-bottom: 1px solid var(--border);
-      background: rgba(7, 9, 15, 0.55);
+    }
+    .step-nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: var(--bg-subtle);
+      padding: 4px;
+      border-radius: 10px;
+      gap: 4px;
     }
     .step-btn {
-      background: transparent; border: 1px solid transparent;
-      color: var(--text-muted); padding: 9px 6px; border-radius: 10px;
-      font-size: 0.75rem; font-weight: 700; cursor: pointer;
-      transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 6px;
+      background: transparent;
+      border: none;
+      color: var(--ink-muted);
+      padding: 8px 6px;
+      border-radius: 7px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
     }
-    .step-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.04); }
+    .step-btn:hover { color: var(--ink); }
     .step-btn.active {
-      background: rgba(56, 189, 248, 0.14);
-      border-color: rgba(56, 189, 248, 0.42);
-      color: #38bdf8;
+      background: #ffffff;
+      color: var(--ink);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
     }
-    .step-num {
-      width: 18px; height: 18px; border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      font-size: 0.65rem; display: inline-flex; align-items: center; justify-content: center;
-    }
-    .step-btn.active .step-num { background: #38bdf8; color: #07090f; }
 
     .scroll-body {
-      flex: 1; overflow-y: auto; padding: 16px 18px;
-      display: flex; flex-direction: column; gap: 14px;
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
     }
-    .scroll-body::-webkit-scrollbar { width: 5px; }
-    .scroll-body::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.14); border-radius: 10px; }
+    .scroll-body::-webkit-scrollbar { width: 4px; }
+    .scroll-body::-webkit-scrollbar-thumb { background: #dcdad3; border-radius: 10px; }
 
-    .tab-pane { display: none; flex-direction: column; gap: 14px; }
+    .tab-pane { display: none; flex-direction: column; gap: 22px; }
     .tab-pane.active { display: flex; }
 
-    .card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 14px; padding: 14px;
-      display: flex; flex-direction: column; gap: 11px;
+    /* Clean Hairline Sections (No heavy boxes) */
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
     }
-    .card-header {
-      display: flex; align-items: center; justify-content: space-between;
-      font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.07em; color: var(--text-muted);
+    .section:last-child { border-bottom: none; padding-bottom: 4px; }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .section-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .section-meta {
+      font-size: 0.7rem;
+      color: var(--ink-muted);
     }
 
-    /* Silhouette Grid */
+    /* Minimal Silhouette Grid */
     .shape-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 9px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
     }
     .shape-card {
-      background: rgba(10, 14, 24, 0.85); border: 1.5px solid var(--border);
-      border-radius: 12px; padding: 10px; cursor: pointer; text-align: left;
-      transition: all 0.18s ease; display: flex; flex-direction: column; gap: 6px;
+      background: var(--bg-subtle);
+      border: 1.5px solid transparent;
+      border-radius: var(--radius-md);
+      padding: 10px 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.16s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
     }
-    .shape-card:hover { border-color: rgba(56, 189, 248, 0.45); transform: translateY(-1px); background: var(--card-hover); }
+    .shape-card:hover { background: var(--bg-hover); }
     .shape-card.active {
-      border-color: var(--accent);
-      background: linear-gradient(145deg, rgba(56, 189, 248, 0.18), rgba(15, 23, 42, 0.94));
-      box-shadow: 0 4px 18px rgba(56, 189, 248, 0.2);
+      background: #ffffff;
+      border-color: var(--ink);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
     }
     .shape-preview-svg {
-      width: 100%; height: 34px; display: flex; align-items: center; justify-content: center;
-      background: rgba(255, 255, 255, 0.03); border-radius: 8px; padding: 4px;
+      width: 100%;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .shape-preview-svg svg { height: 24px; width: auto; stroke: #38bdf8; fill: rgba(56, 189, 248, 0.14); stroke-width: 1.8; }
-    .shape-card h4 { font-size: 0.76rem; font-weight: 700; color: #fff; }
-    .shape-card p { font-size: 0.65rem; color: var(--text-muted); line-height: 1.3; }
+    .shape-preview-svg svg {
+      height: 22px;
+      width: auto;
+      stroke: var(--ink-muted);
+      fill: transparent;
+      stroke-width: 1.8;
+      transition: stroke 0.15s;
+    }
+    .shape-card.active .shape-preview-svg svg {
+      stroke: var(--ink);
+      fill: rgba(17, 17, 17, 0.06);
+    }
+    .shape-card h4 {
+      font-size: 0.69rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+    .shape-card p { display: none; }
 
-    /* Brand Pills (Clean typographic, no ugly SVG) */
-    .brand-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
-    .brand-pill {
-      background: rgba(10, 14, 24, 0.85); border: 1px solid var(--border);
-      border-radius: 10px; padding: 9px 6px; color: var(--text-main);
-      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px;
-      transition: all 0.15s ease; text-align: center;
-    }
-    .brand-pill:hover { border-color: var(--border-strong); background: var(--card-hover); }
-    .brand-pill.active {
-      border-color: var(--accent);
-      background: rgba(56, 189, 248, 0.16);
-      box-shadow: 0 0 0 1px var(--accent);
-    }
-    .brand-pill strong { font-size: 0.73rem; font-weight: 700; }
-    .brand-pill span { font-size: 0.6rem; color: var(--text-muted); }
-
-    .finish-desc {
-      font-size: 0.7rem; color: #cbd5e1; line-height: 1.45;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      border-radius: 9px; padding: 8px 10px;
-    }
-    .info-note {
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.22);
-      border-radius: 10px; padding: 9px 11px;
-      font-size: 0.69rem; color: #bae6fd; line-height: 1.4;
-    }
-
-    .field { display: flex; flex-direction: column; gap: 5px; }
-    .field-label {
-      font-size: 0.72rem; font-weight: 600; color: #cbd5e1;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .val-badge { color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-    input[type="text"], input[type="tel"], select, textarea {
-      width: 100%; background: rgba(9, 12, 20, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 9px;
-      padding: 9px 11px; color: #fff; font-family: inherit;
-      font-size: 0.82rem; font-weight: 600; outline: none;
-      transition: border-color 0.15s;
-    }
-    input[type="text"]:focus, input[type="tel"]:focus, select:focus, textarea:focus {
-      border-color: var(--accent);
-    }
-    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
-
+    /* Segmented Control */
     .seg-control {
-      display: grid; grid-template-columns: 1fr 1fr;
-      background: rgba(9, 12, 20, 0.9); padding: 3px; border-radius: 9px;
-      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-subtle);
+      padding: 3px;
+      border-radius: 9px;
+      gap: 3px;
     }
     .seg-opt {
-      padding: 7px 6px; border: none; background: transparent;
-      color: var(--text-muted); font-size: 0.72rem; font-weight: 700;
-      border-radius: 7px; cursor: pointer; transition: 0.15s;
+      padding: 8px 6px;
+      border: none;
+      background: transparent;
+      color: var(--ink-muted);
+      font-size: 0.74rem;
+      font-weight: 600;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: 0.15s;
     }
-    .seg-opt.active { background: var(--accent); color: #07090f; }
+    .seg-opt.active {
+      background: #ffffff;
+      color: var(--ink);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
 
+    .finish-desc {
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      line-height: 1.45;
+    }
+    .finish-desc strong { color: var(--ink); font-weight: 600; }
+
+    /* Brand Pills */
+    .brand-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .brand-pill {
+      background: var(--bg-subtle);
+      border: 1.5px solid transparent;
+      border-radius: var(--radius-sm);
+      padding: 8px 6px;
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+    .brand-pill:hover { background: var(--bg-hover); }
+    .brand-pill.active {
+      background: #ffffff;
+      border-color: var(--ink);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .brand-pill strong { font-size: 0.72rem; font-weight: 600; }
+    .brand-pill span { display: none; }
+
+    .quiet-note {
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      line-height: 1.4;
+    }
+
+    /* Clean Inputs */
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--ink-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .val-badge { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    input[type="text"], input[type="tel"], select {
+      width: 100%;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 11px;
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 500;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    input[type="text"]:focus, input[type="tel"]:focus, select:focus {
+      background: #ffffff;
+      border-color: var(--ink);
+    }
+    input[type="range"] { width: 100%; accent-color: var(--ink); cursor: pointer; }
+    input[type="checkbox"] { accent-color: var(--ink); cursor: pointer; }
+
+    .inline-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      cursor: pointer;
+    }
+
+    /* Fonts */
     .font-filter-bar { display: flex; gap: 5px; flex-wrap: wrap; }
     .f-cat-btn {
-      background: rgba(9, 12, 20, 0.85); border: 1px solid var(--border);
-      color: var(--text-muted); font-size: 0.65rem; font-weight: 700;
-      padding: 4px 9px; border-radius: 99px; cursor: pointer; transition: 0.15s;
+      background: var(--bg-subtle);
+      border: 1px solid transparent;
+      color: var(--ink-muted);
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: 0.15s;
     }
-    .f-cat-btn.active, .f-cat-btn:hover {
-      background: rgba(56, 189, 248, 0.18); border-color: var(--accent); color: #fff;
-    }
+    .f-cat-btn:hover { color: var(--ink); }
+    .f-cat-btn.active { background: var(--ink); color: #ffffff; }
 
-    .font-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; max-height: 185px; overflow-y: auto; padding-right: 2px; }
+    .font-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; max-height: 170px; overflow-y: auto; padding-right: 2px; }
     .font-card {
-      background: rgba(9, 12, 20, 0.85); border: 1px solid var(--border);
-      border-radius: 8px; padding: 7px 10px; cursor: pointer; text-align: left; color: #fff; transition: 0.15s;
+      background: var(--bg-subtle);
+      border: 1.5px solid transparent;
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      cursor: pointer;
+      text-align: left;
+      color: var(--ink);
+      transition: 0.15s;
     }
-    .font-card:hover { border-color: rgba(255, 255, 255, 0.25); }
-    .font-card.active { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
-    .font-card .f-sample { font-size: 0.92rem; line-height: 1.25; display: block; color: #f8fafc; }
-    .font-card .f-meta { font-size: 0.6rem; color: var(--text-muted); font-family: 'Inter', sans-serif; }
+    .font-card:hover { background: var(--bg-hover); }
+    .font-card.active { background: #ffffff; border-color: var(--ink); }
+    .font-card .f-sample { font-size: 0.9rem; line-height: 1.25; display: block; color: var(--ink); }
+    .font-card .f-meta { font-size: 0.62rem; color: var(--ink-muted); font-family: 'Inter', sans-serif; }
 
+    /* Minimal Swatches */
     .swatch-presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
     .swatch-btn {
-      background: rgba(9, 12, 20, 0.85); border: 1px solid var(--border);
-      border-radius: 8px; padding: 7px 8px; color: #e2e8f0;
-      font-size: 0.69rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;
+      background: var(--bg-subtle);
+      border: 1.5px solid transparent;
+      border-radius: var(--radius-sm);
+      padding: 8px;
+      color: var(--ink);
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: 0.15s;
     }
-    .swatch-btn:hover { border-color: var(--accent); }
+    .swatch-btn:hover { background: var(--bg-hover); border-color: var(--border); }
     .dots { display: flex; }
-    .dots i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-left: -3px; border: 1px solid rgba(0, 0, 0, 0.4); }
+    .dots i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; margin-left: -4px; border: 1.5px solid #ffffff; }
     .dots i:first-child { margin-left: 0; }
 
     .color-pickers { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .cp-box {
-      background: rgba(9, 12, 20, 0.85); border: 1px solid var(--border);
-      border-radius: 8px; padding: 6px 10px; display: flex; align-items: center;
-      justify-content: space-between; font-size: 0.72rem; font-weight: 600;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.73rem;
+      font-weight: 500;
+      color: var(--ink);
     }
-    input[type="color"] { width: 26px; height: 22px; border: none; background: none; cursor: pointer; }
+    input[type="color"] {
+      width: 24px; height: 24px;
+      border: none; background: none; cursor: pointer;
+      border-radius: 50%; overflow: hidden;
+    }
 
-    .part-color-list { display: flex; flex-direction: column; gap: 6px; max-height: 190px; overflow-y: auto; padding-right: 3px; }
+    .part-color-list { display: flex; flex-direction: column; gap: 5px; max-height: 170px; overflow-y: auto; }
     .part-row {
-      background: rgba(9, 12, 20, 0.85); border: 1px solid var(--border);
-      border-radius: 8px; padding: 6px 10px; display: flex; align-items: center;
-      justify-content: space-between; font-size: 0.72rem;
+      background: var(--bg-subtle);
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
     }
-    .part-row.selected-part { border-color: #ec4899; background: rgba(236, 72, 153, 0.14); }
+    .part-row.selected-part { border-color: var(--ink); background: #ffffff; }
     .part-row-actions { display: flex; align-items: center; gap: 6px; }
     .mini-reset {
-      background: rgba(255, 255, 255, 0.08); border: none; color: #94a3b8;
-      font-size: 0.64rem; font-weight: 700; padding: 3px 7px; border-radius: 5px; cursor: pointer;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--ink-muted);
+      font-size: 0.64rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      cursor: pointer;
     }
-    .mini-reset:hover { color: #fff; background: rgba(255, 255, 255, 0.16); }
+    .mini-reset:hover { color: var(--ink); border-color: var(--ink); }
 
     /* Footer CTA */
     .sidebar-footer {
-      padding: 14px 18px; border-top: 1px solid var(--border);
-      background: rgba(8, 11, 18, 0.96); display: flex; flex-direction: column; gap: 8px;
+      padding: 16px 24px 18px;
+      border-top: 1px solid var(--border);
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
     }
     .btn-query-main {
-      width: 100%; padding: 12px 16px; border-radius: 11px; border: none;
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: #fff; font-weight: 800; font-size: 0.86rem; cursor: pointer;
-      box-shadow: 0 6px 24px rgba(16, 185, 129, 0.35);
-      transition: transform 0.15s, filter 0.15s;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%;
+      padding: 13px 18px;
+      border-radius: 10px;
+      border: none;
+      background: var(--ink);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.15s;
     }
-    .btn-query-main:hover { filter: brightness(1.08); transform: translateY(-1px); }
-    .footer-hint { text-align: center; font-size: 0.67rem; color: var(--text-muted); }
+    .btn-query-main:hover { opacity: 0.88; transform: translateY(-1px); }
+    .footer-hint { text-align: center; font-size: 0.68rem; color: var(--ink-soft); }
 
-    /* 3D Viewport */
-    .viewport-stage { flex: 1; position: relative; background: #0d1117; overflow: hidden; }
+    /* 3D Gallery Stage */
+    .viewport-stage { flex: 1; position: relative; background: var(--bg-stage); overflow: hidden; }
     #canvas-container { width: 100%; height: 100%; }
 
     .floating-toolbar {
-      position: absolute; top: 16px; left: 16px; right: 16px;
-      display: flex; justify-content: space-between; align-items: center;
-      pointer-events: none; z-index: 10; flex-wrap: wrap; gap: 8px;
+      position: absolute;
+      top: 18px; left: 20px; right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      z-index: 10;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .glass-bar {
-      pointer-events: auto; display: flex; gap: 4px;
-      background: rgba(13, 17, 27, 0.82); backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.12); padding: 5px; border-radius: 11px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      pointer-events: auto;
+      display: flex;
+      gap: 3px;
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      padding: 4px;
+      border-radius: 99px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
     }
     .tool-btn {
-      background: transparent; border: 1px solid transparent; color: #cbd5e1;
-      font-size: 0.72rem; font-weight: 700; padding: 6px 10px; border-radius: 7px; cursor: pointer; transition: 0.15s;
+      background: transparent;
+      border: none;
+      color: var(--ink-muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: 0.15s;
     }
-    .tool-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
-    .tool-btn.active { background: rgba(56, 189, 248, 0.22); border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; }
-    .tool-btn.paint-active { background: rgba(236, 72, 153, 0.24); border-color: rgba(236, 72, 153, 0.65); color: #f472b6; }
+    .tool-btn:hover { color: var(--ink); }
+    .tool-btn.active, .tool-btn.paint-active {
+      background: var(--ink);
+      color: #ffffff;
+    }
 
     .paint-inspector {
-      position: absolute; top: 66px; left: 16px; z-index: 11;
-      background: rgba(13, 17, 27, 0.92); backdrop-filter: blur(14px);
-      border: 1px solid rgba(236, 72, 153, 0.55); border-radius: 12px;
-      padding: 8px 13px; display: none; align-items: center; gap: 10px;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5); flex-wrap: wrap;
+      position: absolute;
+      top: 68px; left: 20px; z-index: 11;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 7px 14px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      flex-wrap: wrap;
     }
     .paint-inspector.visible { display: flex; }
     .quick-swatches { display: flex; gap: 5px; }
-    .q-dot { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.4); cursor: pointer; transition: transform 0.12s; }
-    .q-dot:hover { transform: scale(1.2); }
+    .q-dot { width: 17px; height: 17px; border-radius: 50%; border: 1.5px solid rgba(0, 0, 0, 0.15); cursor: pointer; transition: transform 0.12s; }
+    .q-dot:hover { transform: scale(1.18); }
 
     .bottom-hud {
-      position: absolute; bottom: 16px; left: 16px; right: 16px;
-      background: rgba(13, 17, 27, 0.85); backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 12px;
-      padding: 10px 16px; display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.74rem; color: #cbd5e1; pointer-events: none; gap: 10px; flex-wrap: wrap;
+      position: absolute;
+      bottom: 18px; left: 20px; right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      pointer-events: none;
+      gap: 10px;
     }
     .status-chip {
-      background: rgba(56, 189, 248, 0.14); border: 1px solid rgba(56, 189, 248, 0.35);
-      color: #38bdf8; padding: 3px 9px; border-radius: 6px;
-      font-weight: 700; font-size: 0.67rem;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(17, 17, 17, 0.08);
+      color: var(--ink);
+      padding: 5px 12px;
+      border-radius: 99px;
+      font-weight: 600;
+      font-size: 0.7rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    }
+    .hud-hint {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(12px);
+      padding: 5px 12px;
+      border-radius: 99px;
+      border: 1px solid rgba(17, 17, 17, 0.06);
     }
 
-    /* Query Modal */
+    /* Clean Modal */
     .modal-backdrop {
       position: fixed; inset: 0; z-index: 100;
-      background: rgba(5, 7, 12, 0.78); backdrop-filter: blur(8px);
+      background: rgba(17, 17, 17, 0.45);
+      backdrop-filter: blur(6px);
       display: none; align-items: center; justify-content: center; padding: 16px;
     }
     .modal-backdrop.open { display: flex; }
     .modal-card {
-      width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto;
-      background: #0f1523; border: 1px solid var(--border-strong);
-      border-radius: 18px; padding: 22px;
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
-      display: flex; flex-direction: column; gap: 14px;
+      width: 100%; max-width: 520px; max-height: 92vh; overflow-y: auto;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+      display: flex; flex-direction: column; gap: 16px;
     }
     .modal-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-    .modal-head h2 { font-size: 1.15rem; font-weight: 800; }
-    .modal-head p { font-size: 0.76rem; color: var(--text-muted); margin-top: 2px; }
+    .modal-head h2 { font-size: 1.1rem; font-weight: 700; color: var(--ink); }
+    .modal-head p { font-size: 0.76rem; color: var(--ink-muted); margin-top: 2px; }
     .close-btn {
-      background: rgba(255, 255, 255, 0.08); border: none; color: #cbd5e1;
-      width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-weight: 700;
+      background: var(--bg-subtle); border: none; color: var(--ink);
+      width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: 600;
     }
-    .close-btn:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
+    .close-btn:hover { background: var(--bg-hover); }
 
     .preview-strip {
-      display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center;
-      background: rgba(9, 12, 20, 0.8); border: 1px solid var(--border);
+      display: grid; grid-template-columns: 148px 1fr; gap: 14px; align-items: center;
+      background: var(--bg-subtle); border: 1px solid var(--border);
       border-radius: 12px; padding: 10px;
     }
     .preview-strip img {
-      width: 100%; height: 96px; object-fit: cover; border-radius: 8px;
+      width: 100%; height: 92px; object-fit: cover; border-radius: 8px;
       border: 1px solid var(--border);
     }
-    .spec-mini { font-size: 0.72rem; color: #cbd5e1; line-height: 1.5; }
-    .spec-mini strong { color: #fff; }
+    .spec-mini { font-size: 0.73rem; color: var(--ink-muted); line-height: 1.55; }
+    .spec-mini strong { color: var(--ink); font-weight: 600; }
 
-    .send-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+    .send-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
     .btn-wa {
-      background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff;
+      background: var(--wa-green); color: #ffffff;
       border: none; border-radius: 10px; padding: 12px 14px;
-      font-weight: 800; font-size: 0.85rem; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-weight: 600; font-size: 0.85rem; cursor: pointer;
     }
-    .btn-wa:hover { filter: brightness(1.07); }
+    .btn-wa:hover { filter: brightness(1.06); }
     .send-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .btn-sec {
-      background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-strong);
-      color: #f8fafc; border-radius: 10px; padding: 10px 12px;
-      font-size: 0.76rem; font-weight: 700; cursor: pointer;
+      background: var(--bg-subtle); border: 1px solid var(--border);
+      color: var(--ink); border-radius: 10px; padding: 10px 12px;
+      font-size: 0.75rem; font-weight: 600; cursor: pointer;
     }
-    .btn-sec:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--accent); }
+    .btn-sec:hover { background: var(--bg-hover); border-color: var(--ink); }
 
-    /* Toast */
     .toast {
       position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
-      background: #10b981; color: #fff; padding: 10px 18px; border-radius: 99px;
-      font-size: 0.78rem; font-weight: 700; z-index: 200; opacity: 0;
+      background: var(--ink); color: #ffffff; padding: 10px 18px; border-radius: 99px;
+      font-size: 0.76rem; font-weight: 600; z-index: 200; opacity: 0;
       pointer-events: none; transition: all 0.25s ease;
-      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* Responsive Mobile Layout */
     @media (max-width: 860px) {
       body { flex-direction: column-reverse; height: 100dvh; }
-      .viewport-stage { height: 42vh; min-height: 260px; flex: none; }
+      .viewport-stage { height: 42vh; min-height: 250px; flex: none; }
       .sidebar { width: 100%; min-width: 0; height: 58vh; border-right: none; border-top: 1px solid var(--border); }
       .bottom-hud { display: none; }
       .preview-strip { grid-template-columns: 1fr; }
@@ -406,69 +604,64 @@
   <aside class="sidebar">
     <div class="studio-header">
       <div class="brand-lockup">
-        <div class="brand-badge">3D</div>
-        <div>
-          <h1>bTechMistriVaala</h1>
-          <p>Custom 3D Keychain Configurator</p>
-        </div>
+        <h1>Mistri making Keychains</h1>
+        <p>Design and Send it for printing!</p>
       </div>
-      <span class="live-pill"><span class="live-dot"></span>Design your keychain now!</span>
+      <span class="live-pill"><span class="live-dot"></span>Make your keychain now</span>
     </div>
 
-    <nav class="step-nav">
-      <button class="step-btn active" data-tab="style"><span class="step-num">1</span>Style</button>
-      <button class="step-btn" data-tab="text"><span class="step-num">2</span>Text &amp; Brand</button>
-      <button class="step-btn" data-tab="colors"><span class="step-num">3</span>Colors</button>
-    </nav>
+    <div class="step-nav-wrap">
+      <nav class="step-nav">
+        <button class="step-btn active" data-tab="style">1. Style</button>
+        <button class="step-btn" data-tab="text">2. Text &amp; Brand</button>
+        <button class="step-btn" data-tab="colors">3. Colors</button>
+      </nav>
+    </div>
 
     <div class="scroll-body">
       <!-- STEP 1: STYLE -->
       <div class="tab-pane active" id="tab-style">
-        <div class="card">
-          <div class="card-header">
-            <span>Choose Keychain Style</span>
-            <span style="color:#38bdf8; font-size:0.66rem;">9 Designs</span>
+        <div class="section">
+          <div class="section-head">
+            <span class="section-title">Silhouette</span>
+            <span class="section-meta">9 Designs</span>
           </div>
           <div class="shape-grid" id="shapeGrid"></div>
         </div>
 
-        <div class="card" id="brakeTunerCard" style="display:none; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.07);">
-          <div class="card-header">
-            <span>Spinning Brake Disc Options</span>
-            <label style="font-size:0.68rem; text-transform:none; cursor:pointer; display:flex; align-items:center; gap:5px; color:#38bdf8;">
-              <input type="checkbox" id="spinRotorToggle" checked> Spin Preview
+        <div class="section" id="brakeTunerCard" style="display:none;">
+          <div class="section-head">
+            <span class="section-title">Brake Disc Pattern</span>
+            <label class="inline-check">
+              <input type="checkbox" id="spinRotorToggle" checked> Spin
             </label>
           </div>
-          <div class="field">
-            <label class="field-label">Rotor Disc Pattern</label>
-            <select id="rotorPatternSelect">
-              <option value="jhook">1. AP Racing J-Hook Grooves</option>
-              <option value="floating_spider">2. Two-Piece Floating Spider</option>
-              <option value="type3_slots">3. Brembo Type-3 Slots</option>
-              <option value="turbine">4. Open-Spoke Turbine Blades</option>
-            </select>
-          </div>
+          <select id="rotorPatternSelect">
+            <option value="jhook">1. AP Racing J-Hook Grooves</option>
+            <option value="floating_spider">2. Two-Piece Floating Spider</option>
+            <option value="type3_slots">3. Brembo Type-3 Slots</option>
+            <option value="turbine">4. Open-Spoke Turbine Blades</option>
+          </select>
         </div>
 
-        <div class="card">
-          <div class="card-header">
-            <span>Surface Finish</span>
-            <span style="color:#38bdf8; font-size:0.65rem;">Touch &amp; Feel</span>
+        <div class="section">
+          <div class="section-head">
+            <span class="section-title">Surface Finish</span>
           </div>
           <div class="seg-control" id="printModeToggle">
             <button class="seg-opt active" data-val="facedown">Flush Matte (Flat)</button>
             <button class="seg-opt" data-val="faceup">Raised 3D (Tactile)</button>
           </div>
           <div class="finish-desc" id="finishDescText">
-            <strong>Flush Matte (Printed Face-Down):</strong> Smooth, completely flat surface with a subtle matte sparkle and zero raised edges.
+            <strong>Flush Matte (Printed Face-Down):</strong> Smooth, flat surface with a subtle matte sparkle — pocket-friendly with zero raised edges.
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-header">
-            <span>Quick Preview Text</span>
-            <label style="font-size:0.68rem; text-transform:none; cursor:pointer; display:flex; align-items:center; gap:5px; color:#38bdf8;">
-              <input type="checkbox" id="quickShowOwnerName" checked> Include Name Tag
+        <div class="section">
+          <div class="section-head">
+            <span class="section-title">Quick Text</span>
+            <label class="inline-check">
+              <input type="checkbox" id="quickShowOwnerName" checked> Owner Name
             </label>
           </div>
           <div class="grid-2">
@@ -486,18 +679,20 @@
 
       <!-- STEP 2: TEXT & BRAND -->
       <div class="tab-pane" id="tab-text">
-        <div class="card">
-          <div class="card-header"><span>1. Vehicle Brand</span></div>
-          <div class="brand-grid" id="brandGrid"></div>
-          <div class="info-note">
-            The 3D preview shows a clean <strong>OEM LOGO</strong> placeholder. Your actual brand emblem will be precision-crafted before printing.
+        <div class="section">
+          <div class="section-head">
+            <span class="section-title">Vehicle Brand</span>
           </div>
+          <div class="brand-grid" id="brandGrid"></div>
+          <p class="quiet-note">
+            Preview shows an <strong>OEM LOGO</strong> placeholder — we craft your exact brand emblem before printing.
+          </p>
         </div>
 
-        <div class="card">
-          <div class="card-header">
-            <span>2. Text &amp; Layout</span>
-            <label style="font-size:0.68rem; text-transform:none; cursor:pointer; display:flex; align-items:center; gap:5px;">
+        <div class="section">
+          <div class="section-head">
+            <span class="section-title">Text &amp; Layout</span>
+            <label class="inline-check">
               <input type="checkbox" id="showLogoSubtext" checked> Brand Tag
             </label>
           </div>
@@ -509,8 +704,8 @@
             <div class="field">
               <label class="field-label">Plate Lines</label>
               <select id="lineMode">
-                <option value="1">1-Line (Car Style)</option>
-                <option value="2">2-Line (Bike / Compact)</option>
+                <option value="1">1-Line (Car)</option>
+                <option value="2">2-Line (Bike)</option>
               </select>
             </div>
           </div>
@@ -518,10 +713,8 @@
           <div class="grid-2">
             <div class="field">
               <label class="field-label">
-                <span>Owner Name Tag</span>
-                <label style="font-size:0.66rem; cursor:pointer; display:flex; align-items:center; gap:4px; color:#38bdf8;">
-                  <input type="checkbox" id="showOwnerNameToggle" checked> Include
-                </label>
+                <span>Owner Name</span>
+                <label class="inline-check"><input type="checkbox" id="showOwnerNameToggle" checked> Include</label>
               </label>
               <input type="text" id="topName" value="SHOURYA" maxlength="16">
             </div>
@@ -532,21 +725,23 @@
           </div>
 
           <div class="field" id="sectionToggleWrap">
-            <label class="field-label">Name Badge Sections</label>
+            <label class="field-label">Name Sections</label>
             <div class="seg-control" id="sectionToggle">
-              <button class="seg-opt active" data-val="1">1 Section (Top)</button>
-              <button class="seg-opt" data-val="2">2 Sections (Top + Bottom)</button>
+              <button class="seg-opt active" data-val="1">1 Section</button>
+              <button class="seg-opt" data-val="2">2 Sections</button>
             </div>
           </div>
 
           <div class="field" id="bottomNameWrap" style="display:none;">
-            <label class="field-label">Secondary Tag / Model</label>
+            <label class="field-label">Secondary Tag</label>
             <input type="text" id="bottomName" value="LEGENDER" maxlength="16">
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-header"><span>3. Number &amp; Name Fonts</span></div>
+        <div class="section">
+          <div class="section-head">
+            <span class="section-title">Typography</span>
+          </div>
           <div class="font-filter-bar" id="plateFontFilters">
             <button class="f-cat-btn active" data-cat="all">All (26)</button>
             <button class="f-cat-btn" data-cat="plate">Plate</button>
@@ -555,12 +750,12 @@
             <button class="f-cat-btn" data-cat="aesthetic">Luxury</button>
           </div>
           <div class="field">
-            <label class="field-label"><span>Vehicle Number Font</span><span class="val-badge" id="plateSizeVal">5.5 mm</span></label>
+            <label class="field-label"><span>Number Font</span><span class="val-badge" id="plateSizeVal">5.5 mm</span></label>
             <div class="font-cards" id="plateFontGrid"></div>
             <input type="range" id="plateFontSize" min="3.4" max="7.5" step="0.1" value="5.5">
           </div>
           <div class="field">
-            <label class="field-label"><span>Owner Name Font</span><span class="val-badge" id="nameSizeVal">2.5 mm</span></label>
+            <label class="field-label"><span>Name Font</span><span class="val-badge" id="nameSizeVal">2.5 mm</span></label>
             <div class="font-cards" id="nameFontGrid"></div>
             <input type="range" id="nameFontSize" min="1.6" max="3.8" step="0.1" value="2.5">
           </div>
@@ -569,8 +764,10 @@
 
       <!-- STEP 3: COLORS -->
       <div class="tab-pane" id="tab-colors">
-        <div class="card">
-          <div class="card-header"><span>Popular Color Themes</span></div>
+        <div class="section">
+          <div class="section-head">
+            <span class="section-title">Curated Palettes</span>
+          </div>
           <div class="swatch-presets">
             <button class="swatch-btn" data-p="#f8fafc,#111827,#0f172a,#facc15" data-pname="HSRP Pro">
               <span class="dots"><i style="background:#f8fafc"></i><i style="background:#111827"></i><i style="background:#facc15"></i></span>
@@ -600,38 +797,36 @@
 
           <div class="color-pickers">
             <div class="cp-box"><span>Plate Base</span><input type="color" id="colBase" value="#f8fafc"></div>
-            <div class="cp-box"><span>Frame &amp; Body</span><input type="color" id="colFrame" value="#111827"></div>
+            <div class="cp-box"><span>Body / Frame</span><input type="color" id="colFrame" value="#111827"></div>
             <div class="cp-box"><span>Number &amp; Logo</span><input type="color" id="colText" value="#0f172a"></div>
             <div class="cp-box"><span>Name Text</span><input type="color" id="colName" value="#facc15"></div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-header">
-            <span>Custom Part Colors</span>
+        <div class="section">
+          <div class="section-head">
+            <span class="section-title">Per-Part Colors</span>
             <button class="mini-reset" id="resetAllPartColorsBtn">Reset</button>
           </div>
-          <div class="info-note" style="padding:7px 10px;">
-            Switch to <strong>Tap to Color</strong> in the 3D toolbar and click any part on the keychain to customize it.
-          </div>
+          <p class="quiet-note">Use <strong>Tap to Color</strong> in the 3D toolbar to paint individual parts.</p>
           <div class="part-color-list" id="partColorList"></div>
         </div>
 
-        <div class="card">
-          <div class="card-header"><span>Keyring Loop Position</span></div>
-          <div class="field">
-            <select id="eyeletPos">
-              <option value="left">Left Side Loop</option>
-              <option value="top">Top Center Loop</option>
-            </select>
+        <div class="section">
+          <div class="section-head">
+            <span class="section-title">Keyring Loop</span>
           </div>
+          <select id="eyeletPos">
+            <option value="left">Left Side Loop</option>
+            <option value="top">Top Center Loop</option>
+          </select>
         </div>
       </div>
     </div>
 
     <div class="sidebar-footer">
       <button class="btn-query-main" id="openQueryModalBtn">Send Design Query &rarr;</button>
-      <div class="footer-hint">Free quote &amp; preview confirmation before we craft your keychain</div>
+      <div class="footer-hint">Free quote &amp; preview confirmation before we craft</div>
     </div>
   </aside>
 
@@ -640,17 +835,17 @@
       <div class="glass-bar">
         <button class="tool-btn active" id="orbitModeBtn">Rotate</button>
         <button class="tool-btn" id="paintModeBtn">Tap to Color</button>
-        <button class="tool-btn" id="resetCamBtn">Reset View</button>
+        <button class="tool-btn" id="resetCamBtn">Reset</button>
       </div>
       <div class="glass-bar">
-        <button class="tool-btn active" data-bg="walnut">Walnut</button>
-        <button class="tool-btn" data-bg="dark">Obsidian</button>
-        <button class="tool-btn" data-bg="studio">Light</button>
+        <button class="tool-btn active" data-bg="studio">Studio</button>
+        <button class="tool-btn" data-bg="walnut">Walnut</button>
+        <button class="tool-btn" data-bg="dark">Dark</button>
       </div>
     </div>
 
     <div class="paint-inspector" id="paintInspector">
-      <span style="font-size:0.73rem; font-weight:700; color:#f472b6;" id="selectedPartTitle">Part: None</span>
+      <span style="font-size:0.72rem; font-weight:600; color:var(--ink);" id="selectedPartTitle">Part: None</span>
       <input type="color" id="inspectorColorInput" value="#ef4444" title="Pick Color">
       <div class="quick-swatches" id="quickSwatches"></div>
       <button class="mini-reset" id="inspectorResetPartBtn">Default</button>
@@ -659,10 +854,8 @@
     <div id="canvas-container"></div>
 
     <div class="bottom-hud">
-      <div>
-        <span class="status-chip" id="dimReadout">76.0 &times; 28.0 &times; 3.2 mm</span>
-      </div>
-      <div id="dragStatusText">Drag to rotate 3D preview &bull; Scroll to zoom</div>
+      <span class="status-chip" id="dimReadout">76.0 &times; 28.0 &times; 3.2 mm</span>
+      <span class="hud-hint" id="dragStatusText">Drag to rotate &bull; Scroll to zoom</span>
     </div>
   </main>
 
@@ -672,7 +865,7 @@
       <div class="modal-head">
         <div>
           <h2>Send Your Keychain Query</h2>
-          <p>Review your custom design below and send it directly to get a quote.</p>
+          <p>Review your design and send it directly for a quick quote.</p>
         </div>
         <button class="close-btn" id="closeModalBtn">&times;</button>
       </div>
@@ -705,7 +898,7 @@
         </div>
         <div class="field">
           <label class="field-label">Extra Notes (Optional)</label>
-          <input type="text" id="custNotes" placeholder="e.g. Matte finish, gift pack">
+          <input type="text" id="custNotes" placeholder="e.g. Gift wrap, matte finish">
         </div>
       </div>
 
@@ -715,7 +908,7 @@
           <button class="btn-sec" id="copyQueryBtn">Copy Spec for Instagram DM</button>
           <button class="btn-sec" id="sendEmailBtn">Send via Email</button>
         </div>
-        <button class="btn-sec" id="saveMockupBtn" style="width:100%;">Save 3D Preview Image (to attach in chat)</button>
+        <button class="btn-sec" id="saveMockupBtn" style="width:100%;">Save 3D Preview Image</button>
       </div>
     </div>
   </div>
@@ -739,8 +932,8 @@
     // SELLER CONFIGURATION — UPDATE THESE WITH YOUR DETAILS
     // =========================================================
     const SELLER_CONFIG = {
-      brandName: 'bTech Mistri',
-      whatsappNumber: '919717662946', // Country code + number, no '+' or spaces
+      brandName: 'bTechMistriVaala',
+      whatsappNumber: '919717662946',
       instagramHandle: '@bTechVaalaMistri_3D',
       email: 'vigyanlal@gmail.com'
     };
@@ -880,7 +1073,7 @@
       colName: '#facc15',
       partColors: {},
       selectedPartKey: null,
-      bgTheme: 'walnut',
+      bgTheme: 'studio',
       interactionMode: 'orbit',
       spinRotorDemo: true,
       rotorPattern: 'jhook',
@@ -1412,7 +1605,7 @@
           ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(512, i); ctx.stroke();
         }
       } else {
-        ctx.fillStyle = '#f1f5f9'; ctx.fillRect(0, 0, 512, 512);
+        ctx.fillStyle = '#f2f1ed'; ctx.fillRect(0, 0, 512, 512);
       }
       const tex = new THREE.CanvasTexture(c);
       tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.repeat.set(4, 4);
@@ -1421,7 +1614,7 @@
 
     const groundPlane = new THREE.Mesh(
       new THREE.PlaneGeometry(400, 400),
-      new THREE.MeshStandardMaterial({ map: createBedTexture('walnut'), roughness: 0.78, metalness: 0.05 })
+      new THREE.MeshStandardMaterial({ map: createBedTexture('studio'), roughness: 0.78, metalness: 0.05 })
     );
     groundPlane.receiveShadow = true;
     scene.add(groundPlane);
@@ -1430,9 +1623,9 @@
       state.bgTheme = theme;
       groundPlane.material.map = createBedTexture(theme);
       groundPlane.material.needsUpdate = true;
-      scene.background = new THREE.Color(theme === 'studio' ? 0xe2e8f0 : 0x0f131c);
+      scene.background = new THREE.Color(theme === 'studio' ? 0xf2f1ed : 0x0f131c);
     }
-    applyBackgroundTheme('walnut');
+    applyBackgroundTheme('studio');
 
     const rootAssembly = new THREE.Group();
     scene.add(rootAssembly);
@@ -2517,7 +2710,7 @@
       if (state.shapeStyle === 'brake_rotor') {
         el.innerHTML = '<strong>Raised 3D (Spinning Disc):</strong> The spinning brake disc &amp; caliper are always crafted in crisp 3D relief.';
       } else if (state.printMode === 'facedown') {
-        el.innerHTML = '<strong>Flush Matte (Printed Face-Down):</strong> Smooth, completely flat surface with a subtle matte sparkle and zero raised edges.';
+        el.innerHTML = '<strong>Flush Matte (Printed Face-Down):</strong> Smooth, completely flat surface with a subtle matte sparkle — pocket-friendly with zero raised edges.';
       } else {
         el.innerHTML = '<strong>Raised 3D (Printed Face-Up):</strong> Letters, logo &amp; border pop out in 3D relief — bold tactile feel you can trace with your fingers.';
       }
