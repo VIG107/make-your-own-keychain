@@ -1,0 +1,2656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlateCraft Customizer — Design Your 3D Keychain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Anton&family=Archivo+Black&family=Audiowide&family=Bangers&family=Barlow+Condensed:wght@700;800&family=Bebas+Neue&family=Black+Ops+One&family=Bungee&family=Chakra+Petch:ital,wght@0,700;1,700&family=Cinzel:wght@700;800&family=Exo+2:ital,wght@0,800;1,800&family=Fredoka:wght@700&family=Inter:wght@400;500;600;700;800&family=Kanit:ital,wght@0,800;1,800&family=Lobster&family=Montserrat:wght@700;800;900&family=Orbitron:wght@700;800;900&family=Oswald:wght@700&family=Pacifico&family=Permanent+Marker&family=Rajdhani:wght@700&family=Righteous&family=Russo+One&family=Satisfy&family=Teko:wght@700&family=Titan+One&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-app: #080a10;
+      --panel-bg: rgba(12, 16, 25, 0.96);
+      --card-bg: rgba(20, 26, 40, 0.56);
+      --card-hover: rgba(28, 37, 56, 0.85);
+      --border: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(255, 255, 255, 0.15);
+      --accent: #38bdf8;
+      --accent-2: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-app);
+      color: var(--text-main);
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Left Customizer Panel */
+    .sidebar {
+      width: 430px;
+      min-width: 380px;
+      background: var(--panel-bg);
+      backdrop-filter: blur(24px);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      z-index: 20;
+      box-shadow: 16px 0 48px rgba(0, 0, 0, 0.55);
+    }
+
+    .studio-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.06) 0%, transparent 100%);
+    }
+
+    .brand-lockup { display: flex; align-items: center; gap: 11px; }
+    .brand-badge {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 0.9rem; color: #fff;
+      box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35);
+    }
+    .brand-lockup h1 { font-size: 1.02rem; font-weight: 800; letter-spacing: -0.02em; }
+    .brand-lockup p { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; margin-top: 1px; }
+
+    .live-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      font-size: 0.65rem; font-weight: 700;
+      padding: 4px 10px; border-radius: 99px;
+      letter-spacing: 0.03em;
+    }
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 8px #34d399;
+    }
+
+    /* 3-Step Clean Navigation */
+    .step-nav {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      padding: 10px 16px; gap: 8px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7, 9, 15, 0.55);
+    }
+    .step-btn {
+      background: transparent; border: 1px solid transparent;
+      color: var(--text-muted); padding: 9px 6px; border-radius: 10px;
+      font-size: 0.75rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .step-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.04); }
+    .step-btn.active {
+      background: rgba(56, 189, 248, 0.14);
+      border-color: rgba(56, 189, 248, 0.42);
+      color: #38bdf8;
+    }
+    .step-num {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      font-size: 0.65rem; display: inline-flex; align-items: center; justify-content: center;
+    }
+    .step-btn.active .step-num { background: #38bdf8; color: #07090f; }
+
+    .scroll-body {
+      flex: 1; overflow-y: auto; padding: 16px 18px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .scroll-body::-webkit-scrollbar { width: 5px; }
+    .scroll-body::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.14); border-radius: 10px; }
+
+    .tab-pane { display: none; flex-direction: column; gap: 14px; }
+    .tab-pane.active { display: flex; }
+
+    .card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px;
+      display: flex; flex-direction: column; gap: 11px;
+    }
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--text-muted);
+    }
+
+    /* Silhouette Grid */
+    .shape-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 9px;
+    }
+    .shape-card {
+      background: rgba(10, 14, 24, 0.85); border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 10px; cursor: pointer; text-align: left;
+      transition: all 0.18s ease; display: flex; flex-direction: column; gap: 6px;
+    }
+    .shape-card:hover { border-color: rgba(56, 189, 248, 0.45); transform: translateY(-1px); background: var(--card-hover); }
+    .shape-card.active {
+      border-color: var(--accent);
+      background: linear-gradient(145deg, rgba(56, 189, 248, 0.18), rgba(15, 23, 42, 0.94));
+      box-shadow: 0 4px 18px rgba(56, 189, 248, 0.2);
+    }
+    .shape-preview-svg {
+      width: 100%; height: 34px; display: flex; align-items: center; justify-content: center;
+      background: rgba(255, 255, 255, 0.03); border-radius: 8px; padding: 4px;
+    }
+    .shape-preview-svg svg { height: 24px; width: auto; stroke: #38bdf8; fill: rgba(56, 189, 248, 0.14); stroke-width: 1.8; }
+    .shape-card h4 { font-size: 0.76rem; font-weight: 700; color: #fff; }
+    .shape-card p { font-size: 0.65rem; color: var(--text-muted); line-height: 1.3; }
+
+    /* Brand Pills (Clean typographic, no ugly SVG) */
+    .brand-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+    .brand-pill {
+      background: rgba(10, 14, 24, 0.85); border: 1px solid var(--border);
+      border-radius: 10px; padding: 9px 6px; color: var(--text-main);
+      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px;
+      transition: all 0.15s ease; text-align: center;
+    }
+    .brand-pill:hover { border-color: var(--border-strong); background: var(--card-hover); }
+    .brand-pill.active {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.16);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+    .brand-pill strong { font-size: 0.73rem; font-weight: 700; }
+    .brand-pill span { font-size: 0.6rem; color: var(--text-muted); }
+
+    .finish-desc {
+      font-size: 0.7rem; color: #cbd5e1; line-height: 1.45;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 9px; padding: 8px 10px;
+    }
+    .info-note {
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      border-radius: 10px; padding: 9px 11px;
+      font-size: 0.69rem; color: #bae6fd; line-height: 1.4;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field-label {
+      font-size: 0.72rem; font-weight: 600; color: #cbd5e1;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .val-badge { color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    input[type="text"], input[type="tel"], select, textarea {
+      width: 100%; background: rgba(9, 12, 20, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 9px;
+      padding: 9px 11px; color: #fff; font-family: inherit;
+      font-size: 0.82rem; font-weight: 600; outline: none;
+      transition: border-color 0.15s;
+    }
+    input[type="text"]:focus, input[type="tel"]:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+
+    .seg-control {
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: rgba(9, 12, 20, 0.9); padding: 3px; border-radius: 9px;
+      border: 1px solid var(--border);
+    }
+    .seg-opt {
+      padding: 7px 6px; border: none; background: transparent;
+      color: var(--text-muted); font-size: 0.72rem; font-weight: 700;
+      border-radius: 7px; cursor: pointer; transition: 0.15s;
+    }
+    .seg-opt.active { background: var(--accent); color: #07090f; }
+
+    .font-filter-bar { display: flex; gap: 5px; flex-wrap: wrap; }
+    .f-cat-btn {
+      background: rgba(9, 12, 20, 0.85); border: 1px solid var(--border);
+      color: var(--text-muted); font-size: 0.65rem; font-weight: 700;
+      padding: 4px 9px; border-radius: 99px; cursor: pointer; transition: 0.15s;
+    }
+    .f-cat-btn.active, .f-cat-btn:hover {
+      background: rgba(56, 189, 248, 0.18); border-color: var(--accent); color: #fff;
+    }
+
+    .font-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; max-height: 185px; overflow-y: auto; padding-right: 2px; }
+    .font-card {
+      background: rgba(9, 12, 20, 0.85); border: 1px solid var(--border);
+      border-radius: 8px; padding: 7px 10px; cursor: pointer; text-align: left; color: #fff; transition: 0.15s;
+    }
+    .font-card:hover { border-color: rgba(255, 255, 255, 0.25); }
+    .font-card.active { border-color: var(--accent); background: rgba(56, 189, 248, 0.16); }
+    .font-card .f-sample { font-size: 0.92rem; line-height: 1.25; display: block; color: #f8fafc; }
+    .font-card .f-meta { font-size: 0.6rem; color: var(--text-muted); font-family: 'Inter', sans-serif; }
+
+    .swatch-presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+    .swatch-btn {
+      background: rgba(9, 12, 20, 0.85); border: 1px solid var(--border);
+      border-radius: 8px; padding: 7px 8px; color: #e2e8f0;
+      font-size: 0.69rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;
+    }
+    .swatch-btn:hover { border-color: var(--accent); }
+    .dots { display: flex; }
+    .dots i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-left: -3px; border: 1px solid rgba(0, 0, 0, 0.4); }
+    .dots i:first-child { margin-left: 0; }
+
+    .color-pickers { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .cp-box {
+      background: rgba(9, 12, 20, 0.85); border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px 10px; display: flex; align-items: center;
+      justify-content: space-between; font-size: 0.72rem; font-weight: 600;
+    }
+    input[type="color"] { width: 26px; height: 22px; border: none; background: none; cursor: pointer; }
+
+    .part-color-list { display: flex; flex-direction: column; gap: 6px; max-height: 190px; overflow-y: auto; padding-right: 3px; }
+    .part-row {
+      background: rgba(9, 12, 20, 0.85); border: 1px solid var(--border);
+      border-radius: 8px; padding: 6px 10px; display: flex; align-items: center;
+      justify-content: space-between; font-size: 0.72rem;
+    }
+    .part-row.selected-part { border-color: #ec4899; background: rgba(236, 72, 153, 0.14); }
+    .part-row-actions { display: flex; align-items: center; gap: 6px; }
+    .mini-reset {
+      background: rgba(255, 255, 255, 0.08); border: none; color: #94a3b8;
+      font-size: 0.64rem; font-weight: 700; padding: 3px 7px; border-radius: 5px; cursor: pointer;
+    }
+    .mini-reset:hover { color: #fff; background: rgba(255, 255, 255, 0.16); }
+
+    /* Footer CTA */
+    .sidebar-footer {
+      padding: 14px 18px; border-top: 1px solid var(--border);
+      background: rgba(8, 11, 18, 0.96); display: flex; flex-direction: column; gap: 8px;
+    }
+    .btn-query-main {
+      width: 100%; padding: 12px 16px; border-radius: 11px; border: none;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff; font-weight: 800; font-size: 0.86rem; cursor: pointer;
+      box-shadow: 0 6px 24px rgba(16, 185, 129, 0.35);
+      transition: transform 0.15s, filter 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-query-main:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .footer-hint { text-align: center; font-size: 0.67rem; color: var(--text-muted); }
+
+    /* 3D Viewport */
+    .viewport-stage { flex: 1; position: relative; background: #0d1117; overflow: hidden; }
+    #canvas-container { width: 100%; height: 100%; }
+
+    .floating-toolbar {
+      position: absolute; top: 16px; left: 16px; right: 16px;
+      display: flex; justify-content: space-between; align-items: center;
+      pointer-events: none; z-index: 10; flex-wrap: wrap; gap: 8px;
+    }
+    .glass-bar {
+      pointer-events: auto; display: flex; gap: 4px;
+      background: rgba(13, 17, 27, 0.82); backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12); padding: 5px; border-radius: 11px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+    .tool-btn {
+      background: transparent; border: 1px solid transparent; color: #cbd5e1;
+      font-size: 0.72rem; font-weight: 700; padding: 6px 10px; border-radius: 7px; cursor: pointer; transition: 0.15s;
+    }
+    .tool-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
+    .tool-btn.active { background: rgba(56, 189, 248, 0.22); border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; }
+    .tool-btn.paint-active { background: rgba(236, 72, 153, 0.24); border-color: rgba(236, 72, 153, 0.65); color: #f472b6; }
+
+    .paint-inspector {
+      position: absolute; top: 66px; left: 16px; z-index: 11;
+      background: rgba(13, 17, 27, 0.92); backdrop-filter: blur(14px);
+      border: 1px solid rgba(236, 72, 153, 0.55); border-radius: 12px;
+      padding: 8px 13px; display: none; align-items: center; gap: 10px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5); flex-wrap: wrap;
+    }
+    .paint-inspector.visible { display: flex; }
+    .quick-swatches { display: flex; gap: 5px; }
+    .q-dot { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.4); cursor: pointer; transition: transform 0.12s; }
+    .q-dot:hover { transform: scale(1.2); }
+
+    .bottom-hud {
+      position: absolute; bottom: 16px; left: 16px; right: 16px;
+      background: rgba(13, 17, 27, 0.85); backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 12px;
+      padding: 10px 16px; display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.74rem; color: #cbd5e1; pointer-events: none; gap: 10px; flex-wrap: wrap;
+    }
+    .status-chip {
+      background: rgba(56, 189, 248, 0.14); border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8; padding: 3px 9px; border-radius: 6px;
+      font-weight: 700; font-size: 0.67rem;
+    }
+
+    /* Query Modal */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(5, 7, 12, 0.78); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center; padding: 16px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-card {
+      width: 100%; max-width: 560px; max-height: 92vh; overflow-y: auto;
+      background: #0f1523; border: 1px solid var(--border-strong);
+      border-radius: 18px; padding: 22px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .modal-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .modal-head h2 { font-size: 1.15rem; font-weight: 800; }
+    .modal-head p { font-size: 0.76rem; color: var(--text-muted); margin-top: 2px; }
+    .close-btn {
+      background: rgba(255, 255, 255, 0.08); border: none; color: #cbd5e1;
+      width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-weight: 700;
+    }
+    .close-btn:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
+
+    .preview-strip {
+      display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center;
+      background: rgba(9, 12, 20, 0.8); border: 1px solid var(--border);
+      border-radius: 12px; padding: 10px;
+    }
+    .preview-strip img {
+      width: 100%; height: 96px; object-fit: cover; border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .spec-mini { font-size: 0.72rem; color: #cbd5e1; line-height: 1.5; }
+    .spec-mini strong { color: #fff; }
+
+    .send-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+    .btn-wa {
+      background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff;
+      border: none; border-radius: 10px; padding: 12px 14px;
+      font-weight: 800; font-size: 0.85rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-wa:hover { filter: brightness(1.07); }
+    .send-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .btn-sec {
+      background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border-strong);
+      color: #f8fafc; border-radius: 10px; padding: 10px 12px;
+      font-size: 0.76rem; font-weight: 700; cursor: pointer;
+    }
+    .btn-sec:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--accent); }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: #10b981; color: #fff; padding: 10px 18px; border-radius: 99px;
+      font-size: 0.78rem; font-weight: 700; z-index: 200; opacity: 0;
+      pointer-events: none; transition: all 0.25s ease;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* Responsive Mobile Layout */
+    @media (max-width: 860px) {
+      body { flex-direction: column-reverse; height: 100dvh; }
+      .viewport-stage { height: 42vh; min-height: 260px; flex: none; }
+      .sidebar { width: 100%; min-width: 0; height: 58vh; border-right: none; border-top: 1px solid var(--border); }
+      .bottom-hud { display: none; }
+      .preview-strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="studio-header">
+      <div class="brand-lockup">
+        <div class="brand-badge">3D</div>
+        <div>
+          <h1>bTechMistriVaala</h1>
+          <p>Custom 3D Keychain Configurator</p>
+        </div>
+      </div>
+      <span class="live-pill"><span class="live-dot"></span>Design your keychain now!</span>
+    </div>
+
+    <nav class="step-nav">
+      <button class="step-btn active" data-tab="style"><span class="step-num">1</span>Style</button>
+      <button class="step-btn" data-tab="text"><span class="step-num">2</span>Text &amp; Brand</button>
+      <button class="step-btn" data-tab="colors"><span class="step-num">3</span>Colors</button>
+    </nav>
+
+    <div class="scroll-body">
+      <!-- STEP 1: STYLE -->
+      <div class="tab-pane active" id="tab-style">
+        <div class="card">
+          <div class="card-header">
+            <span>Choose Keychain Style</span>
+            <span style="color:#38bdf8; font-size:0.66rem;">9 Designs</span>
+          </div>
+          <div class="shape-grid" id="shapeGrid"></div>
+        </div>
+
+        <div class="card" id="brakeTunerCard" style="display:none; border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.07);">
+          <div class="card-header">
+            <span>Spinning Brake Disc Options</span>
+            <label style="font-size:0.68rem; text-transform:none; cursor:pointer; display:flex; align-items:center; gap:5px; color:#38bdf8;">
+              <input type="checkbox" id="spinRotorToggle" checked> Spin Preview
+            </label>
+          </div>
+          <div class="field">
+            <label class="field-label">Rotor Disc Pattern</label>
+            <select id="rotorPatternSelect">
+              <option value="jhook">1. AP Racing J-Hook Grooves</option>
+              <option value="floating_spider">2. Two-Piece Floating Spider</option>
+              <option value="type3_slots">3. Brembo Type-3 Slots</option>
+              <option value="turbine">4. Open-Spoke Turbine Blades</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span>Surface Finish</span>
+            <span style="color:#38bdf8; font-size:0.65rem;">Touch &amp; Feel</span>
+          </div>
+          <div class="seg-control" id="printModeToggle">
+            <button class="seg-opt active" data-val="facedown">Flush Matte (Flat)</button>
+            <button class="seg-opt" data-val="faceup">Raised 3D (Tactile)</button>
+          </div>
+          <div class="finish-desc" id="finishDescText">
+            <strong>Flush Matte (Printed Face-Down):</strong> Smooth, completely flat surface with a subtle matte sparkle and zero raised edges.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span>Quick Preview Text</span>
+            <label style="font-size:0.68rem; text-transform:none; cursor:pointer; display:flex; align-items:center; gap:5px; color:#38bdf8;">
+              <input type="checkbox" id="quickShowOwnerName" checked> Include Name Tag
+            </label>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label class="field-label">Vehicle Number</label>
+              <input type="text" id="quickPlate" value="UP 21 CU 1579" maxlength="15">
+            </div>
+            <div class="field" id="quickNameWrap">
+              <label class="field-label">Name / Tag</label>
+              <input type="text" id="quickName" value="SHOURYA" maxlength="16">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: TEXT & BRAND -->
+      <div class="tab-pane" id="tab-text">
+        <div class="card">
+          <div class="card-header"><span>1. Vehicle Brand</span></div>
+          <div class="brand-grid" id="brandGrid"></div>
+          <div class="info-note">
+            The 3D preview shows a clean <strong>OEM LOGO</strong> placeholder. Your actual brand emblem will be precision-crafted before printing.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span>2. Text &amp; Layout</span>
+            <label style="font-size:0.68rem; text-transform:none; cursor:pointer; display:flex; align-items:center; gap:5px;">
+              <input type="checkbox" id="showLogoSubtext" checked> Brand Tag
+            </label>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label class="field-label">Vehicle Number</label>
+              <input type="text" id="plateNumber" value="UP 21 CU 1579" maxlength="15">
+            </div>
+            <div class="field">
+              <label class="field-label">Plate Lines</label>
+              <select id="lineMode">
+                <option value="1">1-Line (Car Style)</option>
+                <option value="2">2-Line (Bike / Compact)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label class="field-label">
+                <span>Owner Name Tag</span>
+                <label style="font-size:0.66rem; cursor:pointer; display:flex; align-items:center; gap:4px; color:#38bdf8;">
+                  <input type="checkbox" id="showOwnerNameToggle" checked> Include
+                </label>
+              </label>
+              <input type="text" id="topName" value="SHOURYA" maxlength="16">
+            </div>
+            <div class="field">
+              <label class="field-label">Text Under Logo</label>
+              <input type="text" id="logoSubtextInput" value="TOYOTA" maxlength="14" placeholder="e.g. FORTUNER">
+            </div>
+          </div>
+
+          <div class="field" id="sectionToggleWrap">
+            <label class="field-label">Name Badge Sections</label>
+            <div class="seg-control" id="sectionToggle">
+              <button class="seg-opt active" data-val="1">1 Section (Top)</button>
+              <button class="seg-opt" data-val="2">2 Sections (Top + Bottom)</button>
+            </div>
+          </div>
+
+          <div class="field" id="bottomNameWrap" style="display:none;">
+            <label class="field-label">Secondary Tag / Model</label>
+            <input type="text" id="bottomName" value="LEGENDER" maxlength="16">
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span>3. Number &amp; Name Fonts</span></div>
+          <div class="font-filter-bar" id="plateFontFilters">
+            <button class="f-cat-btn active" data-cat="all">All (26)</button>
+            <button class="f-cat-btn" data-cat="plate">Plate</button>
+            <button class="f-cat-btn" data-cat="racing">Racing</button>
+            <button class="f-cat-btn" data-cat="funky">Bold</button>
+            <button class="f-cat-btn" data-cat="aesthetic">Luxury</button>
+          </div>
+          <div class="field">
+            <label class="field-label"><span>Vehicle Number Font</span><span class="val-badge" id="plateSizeVal">5.5 mm</span></label>
+            <div class="font-cards" id="plateFontGrid"></div>
+            <input type="range" id="plateFontSize" min="3.4" max="7.5" step="0.1" value="5.5">
+          </div>
+          <div class="field">
+            <label class="field-label"><span>Owner Name Font</span><span class="val-badge" id="nameSizeVal">2.5 mm</span></label>
+            <div class="font-cards" id="nameFontGrid"></div>
+            <input type="range" id="nameFontSize" min="1.6" max="3.8" step="0.1" value="2.5">
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: COLORS -->
+      <div class="tab-pane" id="tab-colors">
+        <div class="card">
+          <div class="card-header"><span>Popular Color Themes</span></div>
+          <div class="swatch-presets">
+            <button class="swatch-btn" data-p="#f8fafc,#111827,#0f172a,#facc15" data-pname="HSRP Pro">
+              <span class="dots"><i style="background:#f8fafc"></i><i style="background:#111827"></i><i style="background:#facc15"></i></span>
+              HSRP Pro
+            </button>
+            <button class="swatch-btn" data-p="#0284c7,#0f172a,#facc15,#ffffff" data-pname="Hyper Blue">
+              <span class="dots"><i style="background:#0284c7"></i><i style="background:#0f172a"></i><i style="background:#facc15"></i></span>
+              Hyper Blue
+            </button>
+            <button class="swatch-btn" data-p="#dc2626,#090d16,#ffffff,#facc15" data-pname="GT Red">
+              <span class="dots"><i style="background:#dc2626"></i><i style="background:#090d16"></i><i style="background:#facc15"></i></span>
+              GT Red
+            </button>
+            <button class="swatch-btn" data-p="#18181b,#f59e0b,#f59e0b,#ffffff" data-pname="Black Gold">
+              <span class="dots"><i style="background:#18181b"></i><i style="background:#f59e0b"></i><i style="background:#ffffff"></i></span>
+              Black Gold
+            </button>
+            <button class="swatch-btn" data-p="#f8fafc,#b91c1c,#111827,#ffffff" data-pname="Brembo Red">
+              <span class="dots"><i style="background:#f8fafc"></i><i style="background:#b91c1c"></i><i style="background:#111827"></i></span>
+              Brembo Red
+            </button>
+            <button class="swatch-btn" data-p="#f5f0e6,#1e3a8a,#1e3a8a,#ffffff" data-pname="JDM Navy">
+              <span class="dots"><i style="background:#f5f0e6"></i><i style="background:#1e3a8a"></i><i style="background:#ffffff"></i></span>
+              JDM Navy
+            </button>
+          </div>
+
+          <div class="color-pickers">
+            <div class="cp-box"><span>Plate Base</span><input type="color" id="colBase" value="#f8fafc"></div>
+            <div class="cp-box"><span>Frame &amp; Body</span><input type="color" id="colFrame" value="#111827"></div>
+            <div class="cp-box"><span>Number &amp; Logo</span><input type="color" id="colText" value="#0f172a"></div>
+            <div class="cp-box"><span>Name Text</span><input type="color" id="colName" value="#facc15"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span>Custom Part Colors</span>
+            <button class="mini-reset" id="resetAllPartColorsBtn">Reset</button>
+          </div>
+          <div class="info-note" style="padding:7px 10px;">
+            Switch to <strong>Tap to Color</strong> in the 3D toolbar and click any part on the keychain to customize it.
+          </div>
+          <div class="part-color-list" id="partColorList"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span>Keyring Loop Position</span></div>
+          <div class="field">
+            <select id="eyeletPos">
+              <option value="left">Left Side Loop</option>
+              <option value="top">Top Center Loop</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="btn-query-main" id="openQueryModalBtn">Send Design Query &rarr;</button>
+      <div class="footer-hint">Free quote &amp; preview confirmation before we craft your keychain</div>
+    </div>
+  </aside>
+
+  <main class="viewport-stage">
+    <div class="floating-toolbar">
+      <div class="glass-bar">
+        <button class="tool-btn active" id="orbitModeBtn">Rotate</button>
+        <button class="tool-btn" id="paintModeBtn">Tap to Color</button>
+        <button class="tool-btn" id="resetCamBtn">Reset View</button>
+      </div>
+      <div class="glass-bar">
+        <button class="tool-btn active" data-bg="walnut">Walnut</button>
+        <button class="tool-btn" data-bg="dark">Obsidian</button>
+        <button class="tool-btn" data-bg="studio">Light</button>
+      </div>
+    </div>
+
+    <div class="paint-inspector" id="paintInspector">
+      <span style="font-size:0.73rem; font-weight:700; color:#f472b6;" id="selectedPartTitle">Part: None</span>
+      <input type="color" id="inspectorColorInput" value="#ef4444" title="Pick Color">
+      <div class="quick-swatches" id="quickSwatches"></div>
+      <button class="mini-reset" id="inspectorResetPartBtn">Default</button>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <div class="bottom-hud">
+      <div>
+        <span class="status-chip" id="dimReadout">76.0 &times; 28.0 &times; 3.2 mm</span>
+      </div>
+      <div id="dragStatusText">Drag to rotate 3D preview &bull; Scroll to zoom</div>
+    </div>
+  </main>
+
+  <!-- CUSTOMER QUERY MODAL -->
+  <div class="modal-backdrop" id="queryModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <h2>Send Your Keychain Query</h2>
+          <p>Review your custom design below and send it directly to get a quote.</p>
+        </div>
+        <button class="close-btn" id="closeModalBtn">&times;</button>
+      </div>
+
+      <div class="preview-strip">
+        <img id="modalSnapshotImg" alt="3D Keychain Preview">
+        <div class="spec-mini" id="modalSpecSummary"></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label class="field-label">Your Name *</label>
+          <input type="text" id="custName" placeholder="e.g. Aarav Sharma">
+        </div>
+        <div class="field">
+          <label class="field-label">WhatsApp / Phone</label>
+          <input type="tel" id="custPhone" placeholder="e.g. +91 98765 43210">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label class="field-label">Quantity</label>
+          <select id="custQty">
+            <option value="1 Keychain">1 Keychain</option>
+            <option value="2 Keychains">2 Keychains (Pair)</option>
+            <option value="3-5 Keychains">3–5 Keychains</option>
+            <option value="Bulk / Club Order (6+)">Bulk / Club Order (6+)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label">Extra Notes (Optional)</label>
+          <input type="text" id="custNotes" placeholder="e.g. Matte finish, gift pack">
+        </div>
+      </div>
+
+      <div class="send-actions">
+        <button class="btn-wa" id="sendWhatsAppBtn">Send Query on WhatsApp</button>
+        <div class="send-row-2">
+          <button class="btn-sec" id="copyQueryBtn">Copy Spec for Instagram DM</button>
+          <button class="btn-sec" id="sendEmailBtn">Send via Email</button>
+        </div>
+        <button class="btn-sec" id="saveMockupBtn" style="width:100%;">Save 3D Preview Image (to attach in chat)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    // =========================================================
+    // SELLER CONFIGURATION — UPDATE THESE WITH YOUR DETAILS
+    // =========================================================
+    const SELLER_CONFIG = {
+      brandName: 'bTech Mistri',
+      whatsappNumber: '919717662946', // Country code + number, no '+' or spaces
+      instagramHandle: '@bTechVaalaMistri_3D',
+      email: 'vigyanlal@gmail.com'
+    };
+
+    const FONT_CATALOG = [
+      { id: 'Barlow Condensed', label: 'HSRP Official', vibe: 'Authentic Plate', cat: 'plate', weight: '800', italic: false },
+      { id: 'Bebas Neue', label: 'Tall Garage', vibe: 'Top Seller', cat: 'plate', weight: '400', italic: false },
+      { id: 'Anton', label: 'Heavy Impact', vibe: 'Thick Block', cat: 'plate', weight: '400', italic: false },
+      { id: 'Oswald', label: 'Euro Sport', vibe: 'Clean Tall', cat: 'plate', weight: '700', italic: false },
+      { id: 'Teko', label: 'Desi Bold', vibe: 'Compact Tall', cat: 'plate', weight: '700', italic: false },
+      { id: 'Archivo Black', label: 'Ultra Heavy', vibe: 'Bold Block', cat: 'plate', weight: '400', italic: false },
+      { id: 'Rajdhani', label: 'Neo HSRP', vibe: 'Squared Tech', cat: 'plate', weight: '700', italic: false },
+      { id: 'Russo One', label: 'Motorsport GT', vibe: 'Pro Racing', cat: 'racing', weight: '400', italic: false },
+      { id: 'Chakra Petch', label: 'Turbo Aero', vibe: 'Slanted Speed', cat: 'racing', weight: '700', italic: true },
+      { id: 'Orbitron', label: 'Cyber EV', vibe: 'Futuristic', cat: 'racing', weight: '800', italic: false },
+      { id: 'Audiowide', label: 'Track Spec', vibe: 'Wide Aero', cat: 'racing', weight: '400', italic: false },
+      { id: 'Exo 2', label: 'Velocity Italic', vibe: 'Dynamic Lean', cat: 'racing', weight: '800', italic: true },
+      { id: 'Kanit', label: 'Drift Italic', vibe: 'Bold Slant', cat: 'racing', weight: '800', italic: true },
+      { id: 'Black Ops One', label: 'Off-Road 4x4', vibe: 'Thar / Stencil', cat: 'racing', weight: '400', italic: false },
+      { id: 'Bungee', label: 'Bungee Block', vibe: 'Street Pop', cat: 'funky', weight: '400', italic: false },
+      { id: 'Titan One', label: 'Bubble Chunk', vibe: 'Thick 3D Pop', cat: 'funky', weight: '400', italic: false },
+      { id: 'Fredoka', label: 'Puffy Round', vibe: 'Soft Chunky', cat: 'funky', weight: '700', italic: false },
+      { id: 'Bangers', label: 'Comic Turbo', vibe: 'High Energy', cat: 'funky', weight: '400', italic: false },
+      { id: 'Permanent Marker', label: 'Street Tag', vibe: 'Hand Marker', cat: 'funky', weight: '400', italic: false },
+      { id: 'Alfa Slab One', label: 'Heavy Slab', vibe: 'Bold Serif', cat: 'funky', weight: '400', italic: false },
+      { id: 'Montserrat', label: 'Luxury Black', vibe: 'Executive SUV', cat: 'aesthetic', weight: '900', italic: false },
+      { id: 'Righteous', label: 'Retro Cruiser', vibe: 'Smooth Curve', cat: 'aesthetic', weight: '400', italic: false },
+      { id: 'Cinzel', label: 'Royal Crest', vibe: 'Luxury Serif', cat: 'aesthetic', weight: '800', italic: false },
+      { id: 'Pacifico', label: 'Signature Flow', vibe: 'Gift Script', cat: 'aesthetic', weight: '400', italic: false },
+      { id: 'Lobster', label: 'Retro Script', vibe: 'Thick Cursive', cat: 'aesthetic', weight: '400', italic: false },
+      { id: 'Satisfy', label: 'Brush Callig', vibe: 'Aesthetic Note', cat: 'aesthetic', weight: '400', italic: false }
+    ];
+
+    const STRUCTURAL_SHAPES = [
+      {
+        id: 'classic_hsrp', title: '1. Classic HSRP', desc: 'Clean rounded plate with chamfered name badge.',
+        svg: `<svg viewBox="0 0 90 36"><rect x="4" y="4" width="82" height="28" rx="5"/><polygon points="32,4 74,4 70,11 36,11"/></svg>`,
+        defaults: { plateFont: 'Barlow Condensed', nameFont: 'Montserrat', lineMode: '1' }
+      },
+      {
+        id: 'car_bumper', title: '2. Front Bumper', desc: 'Smooth sculpted fascia, air intakes & chin splitter.',
+        svg: `<svg viewBox="0 0 90 36"><path d="M12,5 Q45,3 78,5 Q86,8 86,16 L84,27 Q84,31 78,31 L12,31 Q6,31 6,27 L4,16 Q4,8 12,5 Z"/><rect x="20" y="10" width="50" height="13" rx="2.5"/><rect x="8" y="20" width="8" height="6" rx="2"/><rect x="74" y="20" width="8" height="6" rx="2"/></svg>`,
+        defaults: { plateFont: 'Bebas Neue', nameFont: 'Russo One', lineMode: '1' }
+      },
+      {
+        id: 'hex_floating', title: '3. Honeycomb Mesh', desc: 'Precision hex-mesh frame with centered floating plate.',
+        svg: `<svg viewBox="0 0 90 36"><rect x="4" y="4" width="82" height="28" rx="6"/><rect x="13" y="9" width="64" height="18" rx="3"/></svg>`,
+        defaults: { plateFont: 'Oswald', nameFont: 'Chakra Petch', lineMode: '1' }
+      },
+      {
+        id: 'offroad_4x4', title: '4. 4x4 Skid-Plate', desc: 'Armored octagon bezel, flush flange bolts & rollbar.',
+        svg: `<svg viewBox="0 0 90 38"><path d="M30,8 L30,3 L60,3 L60,8 L80,8 L86,14 L86,28 L80,34 L10,34 L4,28 L4,14 L10,8 Z"/><circle cx="20" cy="10.5" r="1.4"/><circle cx="70" cy="10.5" r="1.4"/><circle cx="20" cy="31.5" r="1.4"/><circle cx="70" cy="31.5" r="1.4"/></svg>`,
+        defaults: { plateFont: 'Black Ops One', nameFont: 'Black Ops One', lineMode: '2' }
+      },
+      {
+        id: 'jdm_wing', title: '5. JDM Wing', desc: 'Slim Euro bar with protruding top-right wing.',
+        svg: `<svg viewBox="0 0 90 36"><path d="M4,12 L48,12 L52,5 L86,5 L86,14 L82,14 L82,31 L4,31 Z"/></svg>`,
+        defaults: { plateFont: 'Oswald', nameFont: 'Montserrat', lineMode: '1' }
+      },
+      {
+        id: 'moto_fender', title: '6. Bike Fender', desc: 'Curved motorcycle mudguard arch & rider badge.',
+        svg: `<svg viewBox="0 0 90 42"><path d="M10,32 Q45,26 80,32 L85,18 Q45,4 5,18 Z"/><circle cx="45" cy="11" r="2.2"/></svg>`,
+        defaults: { plateFont: 'Bebas Neue', nameFont: 'Righteous', lineMode: '2' }
+      },
+      {
+        id: 'gt_spoiler', title: '7. GT Wing Spoiler', desc: 'Aerodynamic GT rear wing with swan-neck uprights.',
+        svg: `<svg viewBox="0 0 90 38"><path d="M6,5 Q45,1 84,5 L87,13 L79,13 Q45,9 11,13 L3,13 Z"/><rect x="26" y="11" width="5" height="8"/><rect x="59" y="11" width="5" height="8"/><rect x="12" y="18" width="66" height="15" rx="3"/></svg>`,
+        defaults: { plateFont: 'Russo One', nameFont: 'Orbitron', lineMode: '1' }
+      },
+      {
+        id: 'brake_rotor', title: '8. Spinning Brake Disc', desc: 'Real spinning rotor inside tire & caliper.',
+        svg: `<svg viewBox="0 0 90 40"><circle cx="34" cy="20" r="17"/><path d="M46,4 Q62,8 62,20 Q62,32 46,36 L41,31 Q51,26 51,20 Q51,14 41,9 Z"/><rect x="8" y="14" width="74" height="12" rx="2"/></svg>`,
+        defaults: { plateFont: 'Anton', nameFont: 'Russo One', lineMode: '2' }
+      },
+      {
+        id: 'fob_shield', title: '9. Key-Fob Shield', desc: 'Tapered architectural shield with bottom pill.',
+        svg: `<svg viewBox="0 0 90 40"><polygon points="12,4 78,4 86,14 78,34 45,38 12,34 4,14"/><rect x="33" y="7" width="24" height="4" rx="2"/></svg>`,
+        defaults: { plateFont: 'Montserrat', nameFont: 'Righteous', lineMode: '1' }
+      }
+    ];
+
+    const OEM_BRANDS = {
+      toyota: { name: 'Toyota', tag: 'TOYOTA' },
+      tata: { name: 'Tata', tag: 'TATA' },
+      maruti: { name: 'Maruti Suzuki', tag: 'SUZUKI' },
+      mahindra: { name: 'Mahindra', tag: 'MAHINDRA' },
+      hyundai: { name: 'Hyundai', tag: 'HYUNDAI' },
+      honda: { name: 'Honda', tag: 'HONDA' },
+      kia: { name: 'Kia', tag: 'KIA' },
+      mg: { name: 'MG Motor', tag: 'MG' },
+      bmw: { name: 'BMW', tag: 'BMW' },
+      vw: { name: 'VW / Skoda', tag: 'SKODA' },
+      re: { name: 'Royal Enfield', tag: 'ENFIELD' },
+      none: { name: 'No Logo', tag: '' }
+    };
+
+    const PART_DEFINITIONS = [
+      { key: 'base', label: 'Plate Base', fallbackKey: 'colBase' },
+      { key: 'plateRim', label: 'Plate Border', fallbackKey: 'colFrame' },
+      { key: 'frame', label: 'Tire / Outer Body', fallbackKey: 'colFrame' },
+      { key: 'rimLip', label: 'Alloy Rim Lip', fallbackKey: 'colBase' },
+      { key: 'rotor', label: 'Brake Disc / Backplate', fallbackKey: 'colFrame' },
+      { key: 'spider', label: 'Inner Spider Hat', fallbackKey: 'colFrame' },
+      { key: 'hub', label: 'Bolts / Rivets', fallbackKey: 'colBase' },
+      { key: 'caliper', label: 'Caliper / Name Badge', fallbackKey: 'colFrame' },
+      { key: 'logo', label: 'OEM Logo Slot', fallbackKey: 'colText' },
+      { key: 'subtext', label: 'Brand Tag Text', fallbackKey: 'colText' },
+      { key: 'plate', label: 'Vehicle Number', fallbackKey: 'colText' },
+      { key: 'topName', label: 'Owner Name', fallbackKey: 'colName' },
+      { key: 'botName', label: 'Secondary Tag', fallbackKey: 'colName' }
+    ];
+
+    const state = {
+      shapeStyle: 'classic_hsrp',
+      brandKey: 'toyota',
+      showLogoSubtext: true,
+      logoSubtext: 'TOYOTA',
+      subtextFont: 'Montserrat',
+      subtextFontSize: 1.9,
+      showOwnerName: true,
+      sections: 1,
+      topName: 'SHOURYA',
+      bottomName: 'LEGENDER',
+      plateNumber: 'UP 21 CU 1579',
+      lineMode: '1',
+      plateFont: 'Barlow Condensed',
+      plateFontSize: 5.5,
+      nameFont: 'Montserrat',
+      nameFontSize: 2.5,
+      eyeletPos: 'left',
+      printMode: 'facedown',
+      length: 76,
+      width: 28,
+      colBase: '#f8fafc',
+      colFrame: '#111827',
+      colText: '#0f172a',
+      colName: '#facc15',
+      partColors: {},
+      selectedPartKey: null,
+      bgTheme: 'walnut',
+      interactionMode: 'orbit',
+      spinRotorDemo: true,
+      rotorPattern: 'jhook',
+      caliperAngleDeg: 14,
+      caliperCurveSpanDeg: 46,
+      caliperNameScale: 1.0,
+      caliperArcRadiusOffset: 0
+    };
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => t.classList.remove('show'), 2600);
+    }
+
+    function getPartHexColor(partKey) {
+      if (state.partColors[partKey]) return state.partColors[partKey];
+      const def = PART_DEFINITIONS.find(d => d.key === partKey);
+      return def ? state[def.fallbackKey] : state.colFrame;
+    }
+
+    // ---------------------------------------------------------
+    // 3D TEXT & OEM PLACEHOLDER GEOMETRY
+    // ---------------------------------------------------------
+    function createTextShapesFromCanvas(text, fontObj, heightMm) {
+      if (!text || !text.trim()) return [];
+      const pxHeight = 140;
+      const fontSpec = `${fontObj.italic ? 'italic ' : ''}${fontObj.weight} ${pxHeight}px "${fontObj.id}", sans-serif`;
+
+      const measureCanvas = document.createElement('canvas');
+      const mCtx = measureCanvas.getContext('2d');
+      mCtx.font = fontSpec;
+      const metrics = mCtx.measureText(text);
+      const pad = 24;
+      const cw = Math.ceil(metrics.width + pad * 2);
+      const ch = Math.ceil(pxHeight * 1.45 + pad * 2);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = cw; canvas.height = ch;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, cw, ch);
+      ctx.fillStyle = '#fff'; ctx.font = fontSpec; ctx.textBaseline = 'middle';
+      ctx.fillText(text, pad, ch / 2);
+
+      const imgData = ctx.getImageData(0, 0, cw, ch).data;
+      const grid = new Uint8Array(cw * ch);
+      for (let i = 0; i < cw * ch; i++) grid[i] = imgData[i * 4] > 120 ? 1 : 0;
+
+      const comp = new Int32Array(cw * ch);
+      const queue = new Int32Array(cw * ch);
+      let qHead = 0, qTail = 0;
+
+      for (let x = 0; x < cw; x++) {
+        if (grid[x] === 0 && comp[x] === 0) { comp[x] = -1; queue[qTail++] = x; }
+        const bIdx = (ch - 1) * cw + x;
+        if (grid[bIdx] === 0 && comp[bIdx] === 0) { comp[bIdx] = -1; queue[qTail++] = bIdx; }
+      }
+      for (let y = 0; y < ch; y++) {
+        const lIdx = y * cw;
+        if (grid[lIdx] === 0 && comp[lIdx] === 0) { comp[lIdx] = -1; queue[qTail++] = lIdx; }
+        const rIdx = y * cw + (cw - 1);
+        if (grid[rIdx] === 0 && comp[rIdx] === 0) { comp[rIdx] = -1; queue[qTail++] = rIdx; }
+      }
+
+      while (qHead < qTail) {
+        const curr = queue[qHead++];
+        const cx = curr % cw, cy = (curr - cx) / cw;
+        if (cx > 0 && grid[curr - 1] === 0 && comp[curr - 1] === 0) { comp[curr - 1] = -1; queue[qTail++] = curr - 1; }
+        if (cx + 1 < cw && grid[curr + 1] === 0 && comp[curr + 1] === 0) { comp[curr + 1] = -1; queue[qTail++] = curr + 1; }
+        if (cy > 0 && grid[curr - cw] === 0 && comp[curr - cw] === 0) { comp[curr - cw] = -1; queue[qTail++] = curr - cw; }
+        if (cy + 1 < ch && grid[curr + cw] === 0 && comp[curr + cw] === 0) { comp[curr + cw] = -1; queue[qTail++] = curr + cw; }
+      }
+
+      const isHoleMask = new Uint8Array(cw * ch);
+      for (let i = 0; i < cw * ch; i++) if (grid[i] === 0 && comp[i] === 0) isHoleMask[i] = 1;
+
+      function traceMaskContour(mask, startX, startY) {
+        const contour = [];
+        const dirs = [[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1],[1,-1]];
+        let cx = startX, cy = startY, backtrackDir = 6, steps = 0;
+        const maxSteps = cw * ch * 2;
+        do {
+          contour.push([cx, cy]);
+          let found = false;
+          for (let i = 0; i < 8; i++) {
+            const dIdx = (backtrackDir + 1 + i) % 8;
+            const nx = cx + dirs[dIdx][0], ny = cy + dirs[dIdx][1];
+            if (nx >= 0 && nx < cw && ny >= 0 && ny < ch && mask[ny * cw + nx] === 1) {
+              cx = nx; cy = ny; backtrackDir = (dIdx + 4) % 8; found = true; break;
+            }
+          }
+          if (!found) break;
+          steps++;
+        } while ((cx !== startX || cy !== startY) && steps < maxSteps);
+        return contour;
+      }
+
+      function simplify(pts, eps) {
+        if (pts.length < 4) return pts;
+        let dmax = 0, idx = 0;
+        const end = pts.length - 1;
+        const [x1, y1] = pts[0], [x2, y2] = pts[end];
+        const dx = x2 - x1, dy = y2 - y1, lenSq = dx * dx + dy * dy;
+        for (let i = 1; i < end; i++) {
+          const [px, py] = pts[i];
+          const dist = lenSq === 0 ? Math.hypot(px - x1, py - y1)
+            : Math.hypot(px - (x1 + Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / lenSq)) * dx),
+                         py - (y1 + Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / lenSq)) * dy));
+          if (dist > dmax) { dmax = dist; idx = i; }
+        }
+        if (dmax > eps) {
+          return simplify(pts.slice(0, idx + 1), eps).slice(0, -1).concat(simplify(pts.slice(idx), eps));
+        }
+        return [pts[0], pts[end]];
+      }
+
+      function polyArea(pts) {
+        let a = 0;
+        for (let i = 0; i < pts.length; i++) {
+          const [x1, y1] = pts[i], [x2, y2] = pts[(i + 1) % pts.length];
+          a += x1 * y2 - x2 * y1;
+        }
+        return a / 2;
+      }
+
+      function pointInPoly(px, py, poly) {
+        let inside = false;
+        for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+          const [xi, yi] = poly[i], [xj, yj] = poly[j];
+          if (((yi > py) !== (yj > py)) && (px < (xj - xi) * (py - yi) / (yj - yi + 1e-9) + xi)) inside = !inside;
+        }
+        return inside;
+      }
+
+      function extractComponentsAndContours(mask, minArea, simplifyEps) {
+        const seen = new Uint8Array(cw * ch);
+        const results = [];
+        const q = new Int32Array(cw * ch);
+        for (let y = 1; y < ch - 1; y++) {
+          for (let x = 1; x < cw - 1; x++) {
+            const startIdx = y * cw + x;
+            if (mask[startIdx] === 1 && seen[startIdx] === 0) {
+              const raw = traceMaskContour(mask, x, y);
+              let h = 0, t = 0;
+              seen[startIdx] = 1; q[t++] = startIdx;
+              while (h < t) {
+                const c = q[h++];
+                const cx = c % cw, cy = (c - cx) / cw;
+                for (let dy = -1; dy <= 1; dy++) {
+                  for (let dx = -1; dx <= 1; dx++) {
+                    if (dx === 0 && dy === 0) continue;
+                    const nx = cx + dx, ny = cy + dy;
+                    if (nx >= 0 && nx < cw && ny >= 0 && ny < ch) {
+                      const nIdx = ny * cw + nx;
+                      if (mask[nIdx] === 1 && seen[nIdx] === 0) { seen[nIdx] = 1; q[t++] = nIdx; }
+                    }
+                  }
+                }
+              }
+              if (raw.length >= 6) {
+                const simp = simplify(raw, simplifyEps);
+                const area = Math.abs(polyArea(simp));
+                if (simp.length >= 3 && area >= minArea) results.push({ pts: simp, area });
+              }
+            }
+          }
+        }
+        return results;
+      }
+
+      const outers = extractComponentsAndContours(grid, 14, 0.72).sort((a, b) => b.area - a.area);
+      const holes = extractComponentsAndContours(isHoleMask, 5, 0.55);
+      const scale = heightMm / pxHeight;
+
+      const shapes = [];
+      outers.forEach(outer => {
+        const outerVecs = outer.pts.map(([px, py]) => new THREE.Vector2(px * scale, (ch - py) * scale));
+        if (THREE.ShapeUtils.isClockWise(outerVecs)) outerVecs.reverse();
+        const s = new THREE.Shape(outerVecs);
+        holes.forEach(h => {
+          if (h.used) return;
+          const [hx, hy] = h.pts[0];
+          if (pointInPoly(hx, hy, outer.pts)) {
+            h.used = true;
+            const holeVecs = h.pts.map(([px, py]) => new THREE.Vector2(px * scale, (ch - py) * scale));
+            if (!THREE.ShapeUtils.isClockWise(holeVecs)) holeVecs.reverse();
+            s.holes.push(new THREE.Path(holeVecs));
+          }
+        });
+        shapes.push(s);
+      });
+      return shapes;
+    }
+
+    function buildSolidTextGeometry(textStr, fontId, heightMm, depthMm) {
+      const fontObj = FONT_CATALOG.find(f => f.id === fontId) || FONT_CATALOG[0];
+      const shapes = createTextShapesFromCanvas(textStr, fontObj, heightMm);
+      if (!shapes.length) return null;
+      const geo = new THREE.ExtrudeGeometry(shapes, { depth: depthMm, bevelEnabled: false, curveSegments: 6 });
+      geo.computeBoundingBox();
+      const bb = geo.boundingBox;
+      geo.translate(-(bb.max.x + bb.min.x) / 2, -(bb.max.y + bb.min.y) / 2, 0);
+      return geo;
+    }
+
+    function buildCurvedArcTextGroup(textStr, fontId, heightMm, depthMm, arcRadius, centerAngleRad, curveSpanDeg, material) {
+      const clean = (textStr || '').trim();
+      if (!clean) return null;
+      const fontObj = FONT_CATALOG.find(f => f.id === fontId) || FONT_CATALOG[0];
+      const chars = Array.from(clean);
+
+      const charInfos = chars.map(ch => {
+        if (ch === ' ') return { ch, geo: null, w: heightMm * 0.34 };
+        const shapes = createTextShapesFromCanvas(ch, fontObj, heightMm);
+        if (!shapes.length) return { ch, geo: null, w: heightMm * 0.34 };
+        const geo = new THREE.ExtrudeGeometry(shapes, { depth: depthMm, bevelEnabled: false, curveSegments: 6 });
+        geo.computeBoundingBox();
+        const bb = geo.boundingBox;
+        const w = bb.max.x - bb.min.x;
+        geo.translate(-(bb.max.x + bb.min.x) / 2, -(bb.max.y + bb.min.y) / 2, 0);
+        return { ch, geo, w };
+      });
+
+      const letterGap = heightMm * 0.14;
+      const totalLinearW = charInfos.reduce((acc, c) => acc + c.w, 0) + letterGap * Math.max(0, charInfos.length - 1);
+      if (totalLinearW <= 0) return null;
+
+      const spanRad = (curveSpanDeg * Math.PI) / 180;
+      const group = new THREE.Group();
+      const effectiveSpan = Math.min(spanRad, (totalLinearW / arcRadius) * 1.15);
+      let cursor = -totalLinearW / 2;
+
+      charInfos.forEach(info => {
+        const charCenterLinear = cursor + info.w / 2;
+        const normT = charCenterLinear / totalLinearW;
+        const theta = centerAngleRad - normT * effectiveSpan;
+        if (info.geo) {
+          const m = new THREE.Mesh(info.geo, material);
+          m.position.set(Math.cos(theta) * arcRadius, Math.sin(theta) * arcRadius, 0);
+          m.rotation.z = theta - Math.PI / 2;
+          group.add(m);
+        }
+        cursor += info.w + letterGap;
+      });
+      return group;
+    }
+
+    // Clean "OEM LOGO" Framed Placeholder Box
+    function buildOemLogoPlaceholderGroup(targetW, targetH, depthMm, material) {
+      const group = new THREE.Group();
+      const r = 1.2;
+      const outer = createRoundedRectShape(targetW, targetH, r);
+      outer.holes.push(createRoundedRectPath(targetW - 1.0, targetH - 1.0, Math.max(0.4, r - 0.35)));
+      const borderMesh = new THREE.Mesh(
+        new THREE.ExtrudeGeometry(outer, { depth: depthMm * 0.75, bevelEnabled: false, curveSegments: 8 }),
+        material
+      );
+      group.add(borderMesh);
+
+      const lineH = Math.min(targetH * 0.28, 2.2);
+      const g1 = buildSolidTextGeometry('OEM', 'Montserrat', lineH, depthMm);
+      const g2 = buildSolidTextGeometry('LOGO', 'Montserrat', lineH, depthMm);
+      const maxW = targetW - 2.0;
+
+      if (g1) {
+        g1.computeBoundingBox();
+        const w1 = g1.boundingBox.max.x - g1.boundingBox.min.x;
+        if (w1 > maxW) g1.scale(maxW / w1, maxW / w1, 1);
+        const m1 = new THREE.Mesh(g1, material);
+        m1.position.set(0, lineH * 0.62, 0);
+        group.add(m1);
+      }
+      if (g2) {
+        g2.computeBoundingBox();
+        const w2 = g2.boundingBox.max.x - g2.boundingBox.min.x;
+        if (w2 > maxW) g2.scale(maxW / w2, maxW / w2, 1);
+        const m2 = new THREE.Mesh(g2, material);
+        m2.position.set(0, -lineH * 0.62, 0);
+        group.add(m2);
+      }
+      return group;
+    }
+
+    // ---------------------------------------------------------
+    // UI RENDERING
+    // ---------------------------------------------------------
+    document.querySelectorAll('.step-btn').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.step-btn').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
+      });
+    });
+
+    const shapeGrid = document.getElementById('shapeGrid');
+    STRUCTURAL_SHAPES.forEach(sh => {
+      const card = document.createElement('button');
+      card.className = `shape-card ${sh.id === state.shapeStyle ? 'active' : ''}`;
+      card.innerHTML = `<div class="shape-preview-svg">${sh.svg}</div><h4>${sh.title}</h4><p>${sh.desc}</p>`;
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.shape-card').forEach(x => x.classList.remove('active'));
+        card.classList.add('active');
+        state.shapeStyle = sh.id;
+        if (sh.defaults) Object.assign(state, sh.defaults);
+        syncUiFromState();
+        rebuildMesh();
+      });
+      shapeGrid.appendChild(card);
+    });
+
+    const brandGrid = document.getElementById('brandGrid');
+    Object.entries(OEM_BRANDS).forEach(([key, data]) => {
+      const btn = document.createElement('button');
+      btn.className = `brand-pill ${key === state.brandKey ? 'active' : ''}`;
+      btn.innerHTML = `<strong>${data.name}</strong><span>${key === 'none' ? 'Text Only' : 'OEM Emblem'}</span>`;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.brand-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.brandKey = key;
+        state.logoSubtext = data.tag;
+        document.getElementById('logoSubtextInput').value = data.tag;
+        rebuildMesh();
+      });
+      brandGrid.appendChild(btn);
+    });
+
+    const plateFontGrid = document.getElementById('plateFontGrid');
+    const nameFontGrid = document.getElementById('nameFontGrid');
+    let activeFontFilter = 'all';
+
+    function renderFontCards() {
+      plateFontGrid.innerHTML = '';
+      nameFontGrid.innerHTML = '';
+      FONT_CATALOG.forEach(f => {
+        const styleStr = `font-family:'${f.id}',sans-serif; font-weight:${f.weight}; font-style:${f.italic ? 'italic' : 'normal'};`;
+
+        if (activeFontFilter === 'all' || f.cat === activeFontFilter) {
+          const pCard = document.createElement('button');
+          pCard.className = `font-card ${f.id === state.plateFont ? 'active' : ''}`;
+          pCard.innerHTML = `<span class="f-sample" style="${styleStr}">DL 3C 4321</span><span class="f-meta">${f.label} &bull; ${f.vibe}</span>`;
+          pCard.addEventListener('click', () => {
+            plateFontGrid.querySelectorAll('.font-card').forEach(c => c.classList.remove('active'));
+            pCard.classList.add('active');
+            state.plateFont = f.id;
+            rebuildMesh();
+          });
+          plateFontGrid.appendChild(pCard);
+        }
+
+        const nCard = document.createElement('button');
+        nCard.className = `font-card ${f.id === state.nameFont ? 'active' : ''}`;
+        nCard.innerHTML = `<span class="f-sample" style="${styleStr}">SHOURYA</span><span class="f-meta">${f.label} &bull; ${f.vibe}</span>`;
+        nCard.addEventListener('click', () => {
+          nameFontGrid.querySelectorAll('.font-card').forEach(c => c.classList.remove('active'));
+          nCard.classList.add('active');
+          state.nameFont = f.id;
+          rebuildMesh();
+        });
+        nameFontGrid.appendChild(nCard);
+      });
+    }
+    renderFontCards();
+
+    document.querySelectorAll('#plateFontFilters .f-cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#plateFontFilters .f-cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFontFilter = btn.dataset.cat;
+        renderFontCards();
+      });
+    });
+
+    function renderPartColorList() {
+      const list = document.getElementById('partColorList');
+      list.innerHTML = '';
+      PART_DEFINITIONS.forEach(p => {
+        const hex = getPartHexColor(p.key);
+        const isCustom = !!state.partColors[p.key];
+        const row = document.createElement('div');
+        row.className = `part-row ${state.selectedPartKey === p.key ? 'selected-part' : ''}`;
+        row.innerHTML = `
+          <span style="font-weight:600; color:${isCustom ? '#38bdf8' : '#e2e8f0'};">${p.label}</span>
+          <div class="part-row-actions">
+            ${isCustom ? `<button class="mini-reset" data-reset="${p.key}">Reset</button>` : ''}
+            <input type="color" value="${hex}">
+          </div>`;
+        row.querySelector('input[type="color"]').addEventListener('input', e => {
+          state.partColors[p.key] = e.target.value;
+          selectPartForPainting(p.key);
+          rebuildMesh();
+        });
+        const rst = row.querySelector('[data-reset]');
+        if (rst) {
+          rst.addEventListener('click', () => {
+            delete state.partColors[p.key];
+            renderPartColorList();
+            rebuildMesh();
+          });
+        }
+        list.appendChild(row);
+      });
+    }
+    renderPartColorList();
+
+    const QUICK_SWATCHES = ['#f8fafc', '#111827', '#dc2626', '#facc15', '#0284c7', '#10b981', '#f97316', '#9ca3af'];
+    const quickSwatchesEl = document.getElementById('quickSwatches');
+    QUICK_SWATCHES.forEach(hex => {
+      const dot = document.createElement('button');
+      dot.className = 'q-dot';
+      dot.style.background = hex;
+      dot.addEventListener('click', () => {
+        if (!state.selectedPartKey) return;
+        state.partColors[state.selectedPartKey] = hex;
+        document.getElementById('inspectorColorInput').value = hex;
+        renderPartColorList();
+        rebuildMesh();
+      });
+      quickSwatchesEl.appendChild(dot);
+    });
+
+    function selectPartForPainting(partKey) {
+      state.selectedPartKey = partKey;
+      const def = PART_DEFINITIONS.find(d => d.key === partKey);
+      const hex = getPartHexColor(partKey);
+      document.getElementById('selectedPartTitle').textContent = `Coloring: ${def ? def.label : partKey}`;
+      document.getElementById('inspectorColorInput').value = hex;
+      document.getElementById('paintInspector').classList.add('visible');
+      renderPartColorList();
+    }
+
+    document.getElementById('inspectorColorInput').addEventListener('input', e => {
+      if (!state.selectedPartKey) return;
+      state.partColors[state.selectedPartKey] = e.target.value;
+      renderPartColorList();
+      rebuildMesh();
+    });
+
+    document.getElementById('inspectorResetPartBtn').addEventListener('click', () => {
+      if (!state.selectedPartKey) return;
+      delete state.partColors[state.selectedPartKey];
+      document.getElementById('inspectorColorInput').value = getPartHexColor(state.selectedPartKey);
+      renderPartColorList();
+      rebuildMesh();
+    });
+
+    document.getElementById('resetAllPartColorsBtn').addEventListener('click', () => {
+      state.partColors = {};
+      renderPartColorList();
+      rebuildMesh();
+    });
+
+    function syncUiFromState() {
+      document.getElementById('quickPlate').value = state.plateNumber;
+      document.getElementById('plateNumber').value = state.plateNumber;
+      document.getElementById('quickName').value = state.topName;
+      document.getElementById('topName').value = state.topName;
+      document.getElementById('bottomName').value = state.bottomName;
+      document.getElementById('bottomNameWrap').style.display = state.sections === 2 ? 'flex' : 'none';
+      document.getElementById('lineMode').value = state.lineMode;
+      document.getElementById('eyeletPos').value = state.eyeletPos;
+      document.getElementById('plateFontSize').value = state.plateFontSize;
+      document.getElementById('plateSizeVal').textContent = `${state.plateFontSize.toFixed(1)} mm`;
+      document.getElementById('nameFontSize').value = state.nameFontSize;
+      document.getElementById('nameSizeVal').textContent = `${state.nameFontSize.toFixed(1)} mm`;
+      document.getElementById('colBase').value = state.colBase;
+      document.getElementById('colFrame').value = state.colFrame;
+      document.getElementById('colText').value = state.colText;
+      document.getElementById('colName').value = state.colName;
+      document.querySelectorAll('#sectionToggle .seg-opt').forEach(b => b.classList.toggle('active', parseInt(b.dataset.val, 10) === state.sections));
+      document.querySelectorAll('#printModeToggle .seg-opt').forEach(b => b.classList.toggle('active', b.dataset.val === state.printMode));
+      updateFinishDescription();
+      renderFontCards();
+      renderPartColorList();
+    }
+
+    // ---------------------------------------------------------
+    // THREE.JS SCENE
+    // ---------------------------------------------------------
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(33, container.clientWidth / container.clientHeight, 0.5, 1000);
+    camera.position.set(0, -48, 86);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.08;
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.06;
+    controls.maxPolarAngle = Math.PI * 0.48;
+
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x334155, 0.95));
+    const keyLight = new THREE.DirectionalLight(0xfff9f0, 1.85);
+    keyLight.position.set(35, -45, 78);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.set(2048, 2048);
+    keyLight.shadow.camera.left = -65; keyLight.shadow.camera.right = 65;
+    keyLight.shadow.camera.top = 65; keyLight.shadow.camera.bottom = -65;
+    keyLight.shadow.bias = -0.0005;
+    scene.add(keyLight);
+
+    const rimLight = new THREE.DirectionalLight(0x7dd3fc, 0.72);
+    rimLight.position.set(-45, 50, 40);
+    scene.add(rimLight);
+
+    function createBedTexture(theme) {
+      const c = document.createElement('canvas'); c.width = 512; c.height = 512;
+      const ctx = c.getContext('2d');
+      if (theme === 'walnut') {
+        ctx.fillStyle = '#472f1f'; ctx.fillRect(0, 0, 512, 512);
+        for (let y = 0; y < 512; y += 2) {
+          ctx.fillStyle = `rgba(22, 12, 6, ${0.12 + Math.sin(y * 0.06) * 0.08})`;
+          ctx.fillRect(0, y, 512, 1.5);
+        }
+      } else if (theme === 'dark') {
+        ctx.fillStyle = '#141923'; ctx.fillRect(0, 0, 512, 512);
+        ctx.strokeStyle = 'rgba(255,255,255,0.03)'; ctx.lineWidth = 1;
+        for (let i = 0; i < 512; i += 32) {
+          ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 512); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(512, i); ctx.stroke();
+        }
+      } else {
+        ctx.fillStyle = '#f1f5f9'; ctx.fillRect(0, 0, 512, 512);
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.repeat.set(4, 4);
+      return tex;
+    }
+
+    const groundPlane = new THREE.Mesh(
+      new THREE.PlaneGeometry(400, 400),
+      new THREE.MeshStandardMaterial({ map: createBedTexture('walnut'), roughness: 0.78, metalness: 0.05 })
+    );
+    groundPlane.receiveShadow = true;
+    scene.add(groundPlane);
+
+    function applyBackgroundTheme(theme) {
+      state.bgTheme = theme;
+      groundPlane.material.map = createBedTexture(theme);
+      groundPlane.material.needsUpdate = true;
+      scene.background = new THREE.Color(theme === 'studio' ? 0xe2e8f0 : 0x0f131c);
+    }
+    applyBackgroundTheme('walnut');
+
+    const rootAssembly = new THREE.Group();
+    scene.add(rootAssembly);
+    let rotorSpinGroup = null;
+    let paintableMeshes = [];
+
+    function createRoundedRectShape(w, h, r, cx = 0, cy = 0) {
+      const s = new THREE.Shape();
+      const x = cx - w / 2, y = cy - h / 2;
+      s.moveTo(x + r, y); s.lineTo(x + w - r, y);
+      s.quadraticCurveTo(x + w, y, x + w, y + r);
+      s.lineTo(x + w, y + h - r);
+      s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      s.lineTo(x + r, y + h);
+      s.quadraticCurveTo(x, y + h, x, y + h - r);
+      s.lineTo(x, y + r);
+      s.quadraticCurveTo(x, y, x + r, y);
+      return s;
+    }
+
+    function createRoundedRectPath(w, h, r, cx = 0, cy = 0) {
+      const p = new THREE.Path();
+      const x = cx - w / 2, y = cy - h / 2;
+      p.moveTo(x + r, y); p.lineTo(x + w - r, y);
+      p.quadraticCurveTo(x + w, y, x + w, y + r);
+      p.lineTo(x + w, y + h - r);
+      p.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      p.lineTo(x + r, y + h);
+      p.quadraticCurveTo(x, y + h, x, y + h - r);
+      p.lineTo(x, y + r);
+      p.quadraticCurveTo(x, y, x + r, y);
+      return p;
+    }
+
+    function createOctagonShape(w, h, cut) {
+      const hw = w / 2, hh = h / 2;
+      const s = new THREE.Shape();
+      s.moveTo(-hw + cut, -hh); s.lineTo(hw - cut, -hh);
+      s.lineTo(hw, -hh + cut); s.lineTo(hw, hh - cut);
+      s.lineTo(hw - cut, hh); s.lineTo(-hw + cut, hh);
+      s.lineTo(-hw, hh - cut); s.lineTo(-hw, -hh + cut);
+      s.closePath();
+      return s;
+    }
+
+    function createTabShape(tabW, tabH, isTop, chamfer) {
+      const s = new THREE.Shape();
+      const hw = tabW / 2;
+      const bevel = Math.min(chamfer, tabH * 0.95);
+      if (isTop) {
+        s.moveTo(-hw, 0); s.lineTo(hw, 0); s.lineTo(hw - bevel, -tabH); s.lineTo(-hw + bevel, -tabH); s.closePath();
+      } else {
+        s.moveTo(-hw, 0); s.lineTo(hw, 0); s.lineTo(hw - bevel, tabH); s.lineTo(-hw + bevel, tabH); s.closePath();
+      }
+      return s;
+    }
+
+    function createPeiNormalMap() {
+      const c = document.createElement('canvas'); c.width = 256; c.height = 256;
+      const ctx = c.getContext('2d');
+      const img = ctx.createImageData(256, 256);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 115 + Math.random() * 45;
+        img.data[i] = v; img.data[i + 1] = v; img.data[i + 2] = 255; img.data[i + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.repeat.set(14, 14);
+      return tex;
+    }
+    const peiNormalMap = createPeiNormalMap();
+
+    function getPartMaterial(partKey, isTopSurface = true) {
+      const isPei = state.printMode === 'facedown' && state.shapeStyle !== 'brake_rotor' && isTopSurface;
+      const mat = new THREE.MeshStandardMaterial({
+        color: new THREE.Color(getPartHexColor(partKey)),
+        roughness: isPei ? 0.56 : 0.35,
+        metalness: 0.04,
+        normalMap: isPei ? peiNormalMap : null,
+        normalScale: isPei ? new THREE.Vector2(0.18, 0.18) : new THREE.Vector2(0, 0)
+      });
+      if (isPei && partKey !== 'base') {
+        mat.polygonOffset = true;
+        mat.polygonOffsetFactor = -2;
+        mat.polygonOffsetUnits = -2;
+      }
+      return mat;
+    }
+
+    function tagPart(obj, partKey) {
+      obj.traverse(child => {
+        if (child.isMesh) {
+          child.userData.partKey = partKey;
+          paintableMeshes.push(child);
+        }
+      });
+      return obj;
+    }
+
+    const BASE_H = 2.6;
+    const FEATURE_H = 0.6;
+    const TOTAL_H = BASE_H + FEATURE_H;
+
+    function rebuildMesh() {
+      while (rootAssembly.children.length > 0) rootAssembly.remove(rootAssembly.children[0]);
+      paintableMeshes = [];
+      rotorSpinGroup = null;
+
+      const tunerEl = document.getElementById('brakeTunerCard');
+      if (tunerEl) tunerEl.style.display = state.shapeStyle === 'brake_rotor' ? 'flex' : 'none';
+
+      const plateClean = state.plateNumber.toUpperCase();
+      const topClean = state.topName.toUpperCase();
+      const botClean = state.bottomName.toUpperCase();
+      const subClean = state.logoSubtext.toUpperCase();
+      const hasLogo = state.brandKey !== 'none';
+      const shape = state.shapeStyle;
+
+      const charCount = state.lineMode === '2' ? Math.max(...plateClean.split(/\s+/).map(s => s.length), 5) : plateClean.length;
+      const sizeBoost = (state.plateFontSize - 5.2) * 3.5;
+      let baseL = 23 + charCount * 4.0 + sizeBoost + (hasLogo ? 14 : 0);
+      if (shape === 'hex_floating' || shape === 'gt_spoiler') baseL += 8;
+      if (shape === 'car_bumper') baseL += 6;
+      if (shape === 'brake_rotor') baseL = Math.max(54, Math.min(68, 44 + charCount * 1.3 + (hasLogo ? 6 : 0)));
+      state.length = Math.round(Math.max(54, Math.min(118, baseL)));
+
+      let baseW = state.sections === 2 ? 33 : (state.lineMode === '2' ? 30 : 28);
+      if (shape === 'car_bumper' || shape === 'gt_spoiler' || shape === 'offroad_4x4' || shape === 'fob_shield') baseW = 36;
+      if (shape === 'moto_fender' || shape === 'brake_rotor') baseW = 38;
+      state.width = Math.round(baseW);
+
+      const L = state.length, W = state.width;
+      const rimThickness = 2.0;
+
+      const matBase = getPartMaterial('base');
+      const matFrame = getPartMaterial('frame');
+      const matRotor = getPartMaterial('rotor');
+      const matCaliper = getPartMaterial('caliper');
+      const matHub = getPartMaterial('hub');
+      const matPlateRim = getPartMaterial('plateRim');
+      const matSpider = getPartMaterial('spider');
+      const matRimLip = getPartMaterial('rimLip');
+      const matLogo = getPartMaterial('logo');
+      const matSub = getPartMaterial('subtext');
+      const matPlate = getPartMaterial('plate');
+      const matTopName = getPartMaterial('topName');
+      const matBotName = getPartMaterial('botName');
+
+      const tabH = parseFloat(Math.max(4.4, state.nameFontSize + 2.0).toFixed(1));
+      const topTabW = Math.min(L - 6, Math.round(Math.min(L - 10, Math.max(24, topClean.length * (state.nameFontSize * 1.15) + 11))));
+      let skipEyeletLug = false;
+      let innerPlateShiftX = 0;
+      let innerPlateShiftY = 0;
+      const metalMat = new THREE.MeshStandardMaterial({ color: 0xd8dee9, metalness: 0.9, roughness: 0.2 });
+
+      function placeNameText(textStr, x, y, z, maxW, key = 'topName') {
+        if (!state.showOwnerName || !textStr.length) return;
+        const nameGeo = buildSolidTextGeometry(textStr, state.nameFont, state.nameFontSize, FEATURE_H + 0.02);
+        if (!nameGeo) return;
+        nameGeo.computeBoundingBox();
+        const nw = nameGeo.boundingBox.max.x - nameGeo.boundingBox.min.x;
+        if (nw > maxW) nameGeo.scale(maxW / nw, maxW / nw, 1);
+        const nm = new THREE.Mesh(nameGeo, key === 'botName' ? matBotName : matTopName);
+        nm.position.set(x, y, z);
+        tagPart(nm, key);
+        rootAssembly.add(nm);
+      }
+
+      if (shape === 'brake_rotor') {
+        skipEyeletLug = true;
+        const FH = 0.4, rotorThickness = 3.0, HID = 2.4, Rb = 21.5, GAP = 0.40;
+        const tireBaseR = 25.4, tireTreadR = 26.6, r_c = Rb - 1.8;
+        const stripH = 13.6, plateCenterX = 0;
+        const plateSpanW = 2 * Math.sqrt(Math.pow(17.0, 2) - Math.pow(stripH / 2, 2));
+        const topOfRotor = rotorThickness, zF = topOfRotor;
+        const calOuter = 28.4, discX = -(calOuter - tireTreadR) / 2;
+
+        const addExtr = (shp, z, d, mat, key, cs = 24) => {
+          const m = new THREE.Mesh(new THREE.ExtrudeGeometry(shp, { depth: d, bevelEnabled: false, curveSegments: cs }), mat);
+          m.position.z = z; m.castShadow = true; m.receiveShadow = true; tagPart(m, key); return m;
+        };
+        const annulus = (rIn, rOut) => {
+          const sh = new THREE.Shape(); sh.absarc(0, 0, rOut, 0, Math.PI * 2, false);
+          const h = new THREE.Path(); h.absarc(0, 0, rIn, 0, Math.PI * 2, true);
+          sh.holes.push(h); return sh;
+        };
+        const arcS = (r0, r1, a0, a1) => {
+          const sh = new THREE.Shape();
+          sh.absarc(0, 0, r1, a0, a1, false); sh.absarc(0, 0, r0, a1, a0, true); sh.closePath(); return sh;
+        };
+        const buildTreadedTireRing = (rIn, rBase, rTread, lugs = 28) => {
+          const sh = new THREE.Shape();
+          const stepsPerLug = 6, totalSteps = lugs * stepsPerLug;
+          for (let i = 0; i <= totalSteps; i++) {
+            const ang = (i / totalSteps) * Math.PI * 2;
+            const phase = (i % stepsPerLug) / stepsPerLug;
+            let r = rBase;
+            if (phase >= 0.12 && phase <= 0.68) r = rTread;
+            else if (phase > 0.0 && phase < 0.12) r = rBase + (rTread - rBase) * (phase / 0.12);
+            else if (phase > 0.68 && phase < 0.80) r = rTread - (rTread - rBase) * ((phase - 0.68) / 0.12);
+            const x = Math.cos(ang) * r, y = Math.sin(ang) * r;
+            if (i === 0) sh.moveTo(x, y); else sh.lineTo(x, y);
+          }
+          sh.closePath();
+          const bore = new THREE.Path(); bore.absarc(0, 0, rIn, 0, Math.PI * 2, true); sh.holes.push(bore);
+          return sh;
+        };
+        const buildTreadedArc = (rIn, rBase, rTread, aStart, aEnd, lugs = 28) => {
+          const sh = new THREE.Shape();
+          const totalSpan = aEnd - aStart;
+          const steps = Math.max(48, Math.round((totalSpan / (Math.PI * 2)) * lugs * 6));
+          for (let i = 0; i <= steps; i++) {
+            const ang = aStart + (i / steps) * totalSpan;
+            const normA = ((ang % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+            const phase = ((normA / (Math.PI * 2)) * lugs) % 1;
+            let r = rBase;
+            if (phase >= 0.12 && phase <= 0.68) r = rTread;
+            else if (phase > 0.0 && phase < 0.12) r = rBase + (rTread - rBase) * (phase / 0.12);
+            else if (phase > 0.68 && phase < 0.80) r = rTread - (rTread - rBase) * ((phase - 0.68) / 0.12);
+            const x = Math.cos(ang) * r, y = Math.sin(ang) * r;
+            if (i === 0) sh.moveTo(x, y); else sh.lineTo(x, y);
+          }
+          sh.absarc(0, 0, rIn, aEnd, aStart, true); sh.closePath(); return sh;
+        };
+        const buildEngineeredCaliper = (rInner, rOuter, aStart, aEnd, addDetails = false, addWindow = false) => {
+          const sh = new THREE.Shape();
+          const steps = 44, span = aEnd - aStart, shoulder = 0.16;
+          for (let i = 0; i <= steps; i++) {
+            const t = i / steps, ang = aStart + t * span;
+            let r = rOuter;
+            if (t < shoulder) r = rInner + (rOuter - rInner) * (0.36 + 0.64 * Math.sin((t / shoulder) * Math.PI * 0.5));
+            else if (t > 1 - shoulder) r = rInner + (rOuter - rInner) * (0.36 + 0.64 * Math.sin(((1 - t) / shoulder) * Math.PI * 0.5));
+            else r = rOuter + 0.55 * Math.sin(((t - shoulder) / (1 - 2 * shoulder)) * Math.PI * 6);
+            const x = Math.cos(ang) * r, y = Math.sin(ang) * r;
+            if (i === 0) sh.moveTo(x, y); else sh.lineTo(x, y);
+          }
+          if (addWindow) {
+            const notchHalf = 0.17, aMid = (aStart + aEnd) / 2;
+            sh.absarc(0, 0, rInner, aEnd, aMid + notchHalf, true);
+            sh.absarc(0, 0, rInner + 1.4, aMid + notchHalf - 0.03, aMid - notchHalf + 0.03, true);
+            sh.absarc(0, 0, rInner, aMid - notchHalf, aStart, true);
+          } else {
+            sh.absarc(0, 0, rInner, aEnd, aStart, true);
+          }
+          sh.closePath();
+          if (addDetails) {
+            [aStart + 0.13, aStart + 0.27, aEnd - 0.27, aEnd - 0.13].forEach((bAng, idx) => {
+              const bR = rInner + (rOuter - rInner) * (idx === 0 || idx === 3 ? 0.50 : 0.76);
+              const bolt = new THREE.Path(); bolt.absarc(Math.cos(bAng) * bR, Math.sin(bAng) * bR, 0.80, 0, Math.PI * 2, true);
+              sh.holes.push(bolt);
+            });
+          }
+          return sh;
+        };
+
+        const RUNS = [
+          [0.0, 0.2, Rb - 1.2], [0.2, 0.2, Rb - 1.0], [0.4, 0.2, Rb - 0.8],
+          [0.6, 0.2, Rb - 0.6], [0.8, 0.2, Rb - 0.4], [1.0, 0.2, Rb - 0.2],
+          [1.2, 0.6, Rb],
+          [1.8, 0.2, Rb - 0.2], [2.0, 0.2, Rb - 0.4], [2.2, 0.2, Rb - 0.6],
+          [2.4, 0.2, Rb - 0.8], [2.6, 0.2, Rb - 1.0], [2.8, 0.2, Rb - 1.2]
+        ];
+
+        rotorSpinGroup = new THREE.Group();
+        rotorSpinGroup.position.set(discX, 0, 0);
+
+        const isClearOfPlate = (x, y, pad = 1.40) => {
+          const hw = plateSpanW / 2 + pad, hh = stripH / 2 + pad, cr = 2.4 + pad;
+          const dx = Math.max(Math.abs(x - plateCenterX) - (hw - cr), 0);
+          const dy = Math.max(Math.abs(y) - (hh - cr), 0);
+          return (dx * dx + dy * dy) > (cr * cr);
+        };
+        const buildGroovePath = (pts, halfW) => {
+          if (pts.length < 2) return null;
+          const leftSide = [], rightSide = [];
+          for (let i = 0; i < pts.length; i++) {
+            const prev = pts[Math.max(0, i - 1)], next = pts[Math.min(pts.length - 1, i + 1)];
+            const dx = next[0] - prev[0], dy = next[1] - prev[1], len = Math.hypot(dx, dy) || 1;
+            const nx = (-dy / len) * halfW, ny = (dx / len) * halfW;
+            leftSide.push([pts[i][0] + nx, pts[i][1] + ny]);
+            rightSide.push([pts[i][0] - nx, pts[i][1] - ny]);
+          }
+          const path = new THREE.Path();
+          path.moveTo(leftSide[0][0], leftSide[0][1]);
+          for (let i = 1; i < leftSide.length; i++) path.lineTo(leftSide[i][0], leftSide[i][1]);
+          for (let i = rightSide.length - 1; i >= 0; i--) path.lineTo(rightSide[i][0], rightSide[i][1]);
+          path.closePath();
+          return path;
+        };
+        const clipCurveToRotor = (rawPts, pad = 1.40, minLen = 2.2) => {
+          let seg = [], best = [];
+          for (const pt of rawPts) {
+            if (isClearOfPlate(pt[0], pt[1], pad)) seg.push(pt);
+            else { if (seg.length > best.length) best = seg; seg = []; }
+          }
+          if (seg.length > best.length) best = seg;
+          if (best.length < 2) return null;
+          let arcLen = 0;
+          for (let i = 1; i < best.length; i++) arcLen += Math.hypot(best[i][0] - best[i - 1][0], best[i][1] - best[i - 1][1]);
+          return arcLen >= minLen ? best : null;
+        };
+
+        const pattern = state.rotorPattern || 'jhook';
+        const grooveDepth = 0.6;
+        const baseRotorShape = new THREE.Shape();
+        baseRotorShape.absarc(0, 0, r_c, 0, Math.PI * 2, false);
+        baseRotorShape.holes.push(createRoundedRectPath(plateSpanW, stripH, 2.4, plateCenterX, 0));
+
+        if (pattern === 'turbine') {
+          const fanSpecs = [
+            { deg: 60, rIn: 11.2, rOut: 17.8, span: 16, skew: 9 },
+            { deg: 90, rIn: 9.6, rOut: 17.8, span: 20, skew: 9 },
+            { deg: 120, rIn: 11.2, rOut: 17.8, span: 16, skew: 9 },
+            { deg: 240, rIn: 11.2, rOut: 17.8, span: 16, skew: 9 },
+            { deg: 270, rIn: 9.6, rOut: 17.8, span: 20, skew: 9 },
+            { deg: 300, rIn: 11.2, rOut: 17.8, span: 16, skew: 9 }
+          ];
+          fanSpecs.forEach(({ deg, rIn, rOut, span, skew }) => {
+            const a0 = (deg * Math.PI) / 180, halfS = ((span / 2) * Math.PI) / 180, sk = (skew * Math.PI) / 180;
+            const pts = [];
+            for (let s = 0; s <= 6; s++) { const ang = a0 - halfS + (2 * halfS * s) / 6; pts.push([Math.cos(ang) * rIn, Math.sin(ang) * rIn]); }
+            for (let s = 6; s >= 0; s--) { const ang = a0 - halfS + sk + (2 * halfS * s) / 6; pts.push([Math.cos(ang) * rOut, Math.sin(ang) * rOut]); }
+            if (pts.every(([x, y]) => isClearOfPlate(x, y, 1.30))) {
+              const cut = new THREE.Path();
+              pts.forEach(([x, y], idx) => idx === 0 ? cut.moveTo(x, y) : cut.lineTo(x, y));
+              cut.closePath();
+              baseRotorShape.holes.push(cut);
+            }
+          });
+          rotorSpinGroup.add(addExtr(baseRotorShape, 0, HID, matFrame, 'frame', 64));
+          rotorSpinGroup.add(addExtr(baseRotorShape, HID, rotorThickness - HID, matRotor, 'rotor', 64));
+        } else {
+          rotorSpinGroup.add(addExtr(baseRotorShape, 0, rotorThickness - grooveDepth, matFrame, 'frame', 64));
+          const topFaceShape = new THREE.Shape();
+          topFaceShape.absarc(0, 0, r_c, 0, Math.PI * 2, false);
+          topFaceShape.holes.push(createRoundedRectPath(plateSpanW, stripH, 2.4, plateCenterX, 0));
+
+          if (pattern === 'jhook') {
+            for (let i = 0; i < 10; i++) {
+              const a0 = (i * Math.PI * 2) / 10 + 0.08, raw = [];
+              for (let s = 0; s <= 16; s++) {
+                const t = s / 16, r = 10.4 + t * 8.2, ang = a0 + 0.42 * Math.pow(t, 1.55);
+                raw.push([Math.cos(ang) * r, Math.sin(ang) * r]);
+              }
+              const clipped = clipCurveToRotor(raw, 1.50, 2.2);
+              const gp = clipped && buildGroovePath(clipped, 0.56);
+              if (gp) topFaceShape.holes.push(gp);
+            }
+          } else if (pattern === 'type3_slots') {
+            for (let i = 0; i < 12; i++) {
+              const a0 = (i * Math.PI * 2) / 12 + 0.05, isLong = i % 2 === 0;
+              const rStart = isLong ? 10.4 : 13.3, rEnd = 18.6, sweep = isLong ? 0.34 : 0.22, raw = [];
+              for (let s = 0; s <= 12; s++) {
+                const t = s / 12, r = rStart + t * (rEnd - rStart), ang = a0 + t * sweep;
+                raw.push([Math.cos(ang) * r, Math.sin(ang) * r]);
+              }
+              const clipped = clipCurveToRotor(raw, 1.50, 2.0);
+              const gp = clipped && buildGroovePath(clipped, 0.54);
+              if (gp) topFaceShape.holes.push(gp);
+            }
+          } else if (pattern === 'floating_spider') {
+            for (let i = 0; i < 8; i++) {
+              const a0 = (i * Math.PI * 2) / 8 + 0.14, raw = [];
+              for (let s = 0; s <= 10; s++) {
+                const t = s / 10, r = 14.0 + t * 4.6, ang = a0 + t * 0.24;
+                raw.push([Math.cos(ang) * r, Math.sin(ang) * r]);
+              }
+              const clipped = clipCurveToRotor(raw, 1.50, 1.8);
+              const gp = clipped && buildGroovePath(clipped, 0.48);
+              if (gp) topFaceShape.holes.push(gp);
+            }
+            [1, -1].forEach(sign => {
+              const sp = new THREE.Shape();
+              const baseY = sign * (stripH / 2 - 0.4);
+              const startDeg = sign > 0 ? 32 : 212, endDeg = sign > 0 ? 148 : 328;
+              sp.moveTo(Math.cos((startDeg * Math.PI) / 180) * 12.6, baseY);
+              for (let s = 0; s <= 28; s++) {
+                const deg = startDeg + ((endDeg - startDeg) * s) / 28, ang = (deg * Math.PI) / 180;
+                const r = 12.8 + 0.80 * Math.cos(ang * 10);
+                const px = Math.cos(ang) * r;
+                const py = sign > 0 ? Math.max(baseY + 0.4, Math.sin(ang) * r) : Math.min(baseY - 0.4, Math.sin(ang) * r);
+                sp.lineTo(px, py);
+              }
+              sp.lineTo(Math.cos((endDeg * Math.PI) / 180) * 12.6, baseY);
+              sp.closePath();
+              rotorSpinGroup.add(addExtr(sp, zF, 0.4, matSpider, 'spider', 24));
+            });
+            [56, 90, 124, 236, 270, 304].forEach(deg => {
+              const radA = (deg * Math.PI) / 180, bx = Math.cos(radA) * 12.9, by = Math.sin(radA) * 12.9;
+              if (!isClearOfPlate(bx, by, 1.7)) return;
+              const bobOuter = new THREE.Shape(); bobOuter.absarc(bx, by, 1.40, 0, Math.PI * 2, false);
+              const bobInner = new THREE.Path(); bobInner.absarc(bx, by, 0.62, 0, Math.PI * 2, true);
+              bobOuter.holes.push(bobInner);
+              rotorSpinGroup.add(addExtr(bobOuter, zF, FH, matHub, 'hub', 16));
+            });
+          }
+          rotorSpinGroup.add(addExtr(topFaceShape, rotorThickness - grooveDepth, grooveDepth, matRotor, 'rotor', 64));
+        }
+
+        RUNS.forEach(([z, h, r]) => rotorSpinGroup.add(addExtr(annulus(r_c, r), z, h, z < HID ? matFrame : matRotor, z < HID ? 'frame' : 'rotor', 64)));
+
+        if (pattern !== 'floating_spider' && pattern !== 'turbine') {
+          [66, 90, 114, 246, 270, 294].forEach(deg => {
+            const radA = (deg * Math.PI) / 180, bx = Math.cos(radA) * 10.1, by = Math.sin(radA) * 10.1;
+            if (!isClearOfPlate(bx, by, 1.45)) return;
+            const bobOuter = new THREE.Shape(); bobOuter.absarc(bx, by, 1.12, 0, Math.PI * 2, false);
+            const bobInner = new THREE.Path(); bobInner.absarc(bx, by, 0.48, 0, Math.PI * 2, true);
+            bobOuter.holes.push(bobInner);
+            rotorSpinGroup.add(addExtr(bobOuter, zF, FH, matHub, 'hub', 16));
+          });
+        }
+
+        rotorSpinGroup.add(addExtr(createRoundedRectShape(plateSpanW, stripH, 2.4, plateCenterX, 0), 0, HID, matFrame, 'frame'));
+        rotorSpinGroup.add(addExtr(createRoundedRectShape(plateSpanW, stripH, 2.4, plateCenterX, 0), HID, rotorThickness - HID, matBase, 'base'));
+
+        const stripRim = createRoundedRectShape(plateSpanW, stripH, 2.4, plateCenterX, 0);
+        stripRim.holes.push(createRoundedRectPath(plateSpanW - 2.4, stripH - 2.4, 1.5, plateCenterX, 0));
+        rotorSpinGroup.add(addExtr(stripRim, zF, FH, matPlateRim, 'plateRim'));
+
+        const innerLeft = plateCenterX - plateSpanW / 2 + rimThickness + 1.4;
+        const innerRight = plateCenterX + plateSpanW / 2 - rimThickness - 1.4;
+        let textZoneLeft = innerLeft;
+        if (hasLogo) {
+          const showSub = state.showLogoSubtext && subClean.length > 0;
+          const logoBoxW = 9.2, logoBoxH = showSub ? 6.6 : 8.8;
+          const logoObj = buildOemLogoPlaceholderGroup(logoBoxW, logoBoxH, FH, matLogo);
+          const lx = innerLeft + logoBoxW / 2 + 0.2;
+          logoObj.position.set(lx, showSub ? 1.3 : 0, zF);
+          tagPart(logoObj, 'logo');
+          rotorSpinGroup.add(logoObj);
+          if (showSub) {
+            const subGeo = buildSolidTextGeometry(subClean, state.subtextFont, Math.max(2.1, state.subtextFontSize * 0.88), FH);
+            if (subGeo) {
+              subGeo.computeBoundingBox();
+              const sw = subGeo.boundingBox.max.x - subGeo.boundingBox.min.x;
+              if (sw > logoBoxW + 1.2) subGeo.scale((logoBoxW + 1.2) / sw, (logoBoxW + 1.2) / sw, 1);
+              const sm = new THREE.Mesh(subGeo, matSub); sm.position.set(lx, -3.9, zF);
+              tagPart(sm, 'subtext'); rotorSpinGroup.add(sm);
+            }
+          }
+          textZoneLeft = innerLeft + logoBoxW + 1.5;
+        }
+
+        const availW = Math.max(12, innerRight - textZoneLeft), textCX = (textZoneLeft + innerRight) / 2;
+        const availH = stripH - 2 * rimThickness - 0.8;
+        const bundle = new THREE.Group();
+        if (state.lineMode === '2') {
+          const parts = plateClean.split(/\s+/), mid = Math.ceil(parts.length / 2);
+          const lines = [parts.slice(0, mid).join(' '), parts.slice(mid).join(' ')];
+          const gs = lines.map(tx => buildSolidTextGeometry(tx, state.plateFont, state.plateFontSize, FH)).filter(Boolean);
+          const bb = gs.map(g => { g.computeBoundingBox(); return { w: g.boundingBox.max.x - g.boundingBox.min.x, h: g.boundingBox.max.y - g.boundingBox.min.y }; });
+          const LGAP = 0.85, sumH = bb.reduce((q, r) => q + r.h, 0) + LGAP * Math.max(0, gs.length - 1);
+          let k = Math.min(1, availH / sumH);
+          bb.forEach(r => { k = Math.min(k, availW / r.w); });
+          let yTop = (bb.reduce((q, r) => q + r.h * k, 0) + LGAP * Math.max(0, gs.length - 1)) / 2;
+          gs.forEach((g, i) => { g.scale(k, k, 1); const h = bb[i].h * k; const m = new THREE.Mesh(g, matPlate); m.position.set(textCX, yTop - h / 2, zF); m.castShadow = true; bundle.add(m); yTop -= h + LGAP; });
+        } else {
+          const g = buildSolidTextGeometry(plateClean, state.plateFont, state.plateFontSize * 0.95, FH);
+          if (g) {
+            g.computeBoundingBox();
+            const k = Math.min(1, availW / (g.boundingBox.max.x - g.boundingBox.min.x), availH / (g.boundingBox.max.y - g.boundingBox.min.y));
+            g.scale(k, k, 1);
+            const m = new THREE.Mesh(g, matPlate); m.position.set(textCX, 0, zF); m.castShadow = true; bundle.add(m);
+          }
+        }
+        if (bundle.children.length) { tagPart(bundle, 'plate'); rotorSpinGroup.add(bundle); }
+        rootAssembly.add(rotorSpinGroup);
+
+        const stat = new THREE.Group(); stat.position.set(discX, 0, 0); rootAssembly.add(stat);
+        RUNS.forEach(([z, h, r]) => stat.add(addExtr(buildTreadedTireRing(r + GAP, tireBaseR, tireTreadR, 28), z, h, matFrame, 'frame', 16)));
+
+        const rInTop = Rb - 1.2 + GAP, calInnerOverlap = Rb - 3.3, startAng = -1.04, endAng = 1.10;
+        stat.add(addExtr(arcS(rInTop, rInTop + 1.25, endAng, startAng + Math.PI * 2), topOfRotor, 0.4, matRimLip, 'rimLip', 64));
+        stat.add(addExtr(buildTreadedArc(tireBaseR - 1.4, tireBaseR, tireTreadR - 0.15, endAng, startAng + Math.PI * 2, 28), topOfRotor, 0.4, matFrame, 'frame', 16));
+        stat.add(addExtr(buildEngineeredCaliper(tireBaseR - 0.8, calOuter, startAng, endAng, false, false), 0, topOfRotor + 0.4, matFrame, 'frame', 48));
+
+        const eyeAng = endAng - 0.14, eyeR = calOuter + 0.4;
+        const eyeX = Math.cos(eyeAng) * eyeR, eyeY = Math.sin(eyeAng) * eyeR;
+        const eyeShape = new THREE.Shape(); eyeShape.absarc(eyeX, eyeY, 4.2, 0, Math.PI * 2, false);
+        const eyeHole = new THREE.Path(); eyeHole.absarc(eyeX, eyeY, 2.0, 0, Math.PI * 2, true); eyeShape.holes.push(eyeHole);
+        stat.add(addExtr(eyeShape, 0, topOfRotor + 0.4, matFrame, 'frame', 28));
+
+        stat.add(addExtr(arcS(rInTop, tireBaseR, startAng, endAng), topOfRotor, 0.4, matFrame, 'frame', 48));
+        stat.add(addExtr(buildEngineeredCaliper(20.0, calOuter, startAng, endAng, false, false), topOfRotor + 0.4, 0.2, matCaliper, 'caliper', 48));
+        stat.add(addExtr(buildEngineeredCaliper(19.1, calOuter, startAng, endAng, false, true), topOfRotor + 0.6, 0.2, matCaliper, 'caliper', 48));
+        stat.add(addExtr(buildEngineeredCaliper(calInnerOverlap, calOuter, startAng, endAng, true, true), topOfRotor + 0.8, 0.2, matCaliper, 'caliper', 48));
+        stat.add(addExtr(buildEngineeredCaliper(calInnerOverlap + 0.35, calOuter - 0.55, startAng + 0.03, endAng - 0.03, true, true), topOfRotor + 1.0, 0.4, matCaliper, 'caliper', 48));
+
+        if (state.showOwnerName && topClean.length > 0) {
+          const midR = (calInnerOverlap + calOuter) / 2 + 0.2;
+          const calTextSize = Math.max(3.5, state.nameFontSize * 1.32);
+          const cg = buildCurvedArcTextGroup(topClean, state.nameFont, calTextSize, 0.40, midR, state.caliperAngleDeg * Math.PI / 180, state.caliperCurveSpanDeg, matTopName);
+          if (cg) {
+            cg.position.set(discX, 0, topOfRotor + 1.4);
+            tagPart(cg, 'topName');
+            rootAssembly.add(cg);
+          }
+        }
+
+        const hwX = discX + eyeX, hwY = eyeY, ux = Math.cos(eyeAng), uy = Math.sin(eyeAng);
+        const jr = new THREE.Mesh(new THREE.TorusGeometry(2.3, 0.48, 12, 24), metalMat);
+        jr.position.set(hwX + ux * 2.8, hwY + uy * 2.8, 1.7); jr.rotation.set(Math.PI / 2, 0, eyeAng);
+        const sr1 = new THREE.Mesh(new THREE.TorusGeometry(8.2, 0.72, 14, 36), metalMat);
+        sr1.position.set(hwX + ux * 12.2, hwY + uy * 12.2, 1.7);
+        const sr2 = new THREE.Mesh(new THREE.TorusGeometry(8.2, 0.65, 14, 36), metalMat);
+        sr2.position.set(hwX + ux * 12.2, hwY + uy * 12.2, 2.35);
+        rootAssembly.add(jr, sr1, sr2);
+
+      } else if (shape === 'hex_floating') {
+        // Redesigned #3: Clean rounded outer body with crisp unclipped honeycomb border + centered floating plate
+        const backRect = createRoundedRectShape(L, W, 5.2);
+        const floatW = L - 15.0;
+        const floatH = state.showOwnerName ? (W - 11.5) : (W - 9.5);
+        const floatCenterX = 0;
+        const floatCenterY = state.showOwnerName ? 1.6 : 0;
+
+        const hexRadius = 1.25, dx = 2.85, dy = 2.48;
+        let row = 0;
+        for (let gy = -W / 2 + 2.6; gy <= W / 2 - 2.6; gy += dy) {
+          const xOffset = (row % 2) * (dx / 2);
+          for (let gx = -L / 2 + 3.2 + xOffset; gx <= L / 2 - 3.2; gx += dx) {
+            const outOfBounds = (Math.abs(gx) > L / 2 - 2.4) || (Math.abs(gy) > W / 2 - 2.2);
+            const inFloatingZone = (Math.abs(gx - floatCenterX) < floatW / 2 + 1.1) && (Math.abs(gy - floatCenterY) < floatH / 2 + 1.1);
+            const inNameZone = state.showOwnerName && (Math.abs(gx) < topTabW / 2 + 1.6) && (gy < -W / 2 + tabH + 2.2);
+            if (!outOfBounds && !inFloatingZone && !inNameZone) {
+              const hexHole = new THREE.Path();
+              for (let k = 0; k < 6; k++) {
+                const ang = (Math.PI / 3) * k + Math.PI / 6;
+                const px = gx + Math.cos(ang) * hexRadius, py = gy + Math.sin(ang) * hexRadius;
+                if (k === 0) hexHole.moveTo(px, py); else hexHole.lineTo(px, py);
+              }
+              hexHole.closePath();
+              backRect.holes.push(hexHole);
+            }
+          }
+          row++;
+        }
+
+        const backMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(backRect, { depth: BASE_H - 0.5, bevelEnabled: false, curveSegments: 16 }), matRotor);
+        backMesh.castShadow = true; backMesh.receiveShadow = true;
+        rootAssembly.add(tagPart(backMesh, 'rotor'));
+
+        const floatMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createRoundedRectShape(floatW, floatH, 3.0, floatCenterX, floatCenterY), { depth: 0.75, bevelEnabled: false, curveSegments: 14 }), matBase);
+        floatMesh.position.z = BASE_H - 0.5; floatMesh.castShadow = true;
+        rootAssembly.add(tagPart(floatMesh, 'base'));
+
+        const floatRim = createRoundedRectShape(floatW, floatH, 3.0, floatCenterX, floatCenterY);
+        floatRim.holes.push(createRoundedRectPath(floatW - 2.6, floatH - 2.6, 2.0, floatCenterX, floatCenterY));
+        const floatRimMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(floatRim, { depth: FEATURE_H, bevelEnabled: false, curveSegments: 14 }), matPlateRim);
+        floatRimMesh.position.z = BASE_H + 0.25;
+        rootAssembly.add(tagPart(floatRimMesh, 'plateRim'));
+
+        if (state.showOwnerName && topClean.length > 0) {
+          const wingW = Math.min(L - 16, Math.max(26, topTabW));
+          const wingMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createTabShape(wingW, tabH, false, 2.6), { depth: FEATURE_H, bevelEnabled: false }), matCaliper);
+          wingMesh.position.set(0, -W / 2 + 0.8, BASE_H + 0.25);
+          rootAssembly.add(tagPart(wingMesh, 'caliper'));
+          placeNameText(topClean, 0, -W / 2 + 0.8 + tabH / 2, BASE_H + 0.27, wingW - 5);
+        }
+        innerPlateShiftX = floatCenterX; innerPlateShiftY = floatCenterY;
+
+      } else if (shape === 'car_bumper') {
+        // Redesigned #2: Pocket-friendly, smooth sculpted Motorsport Front Bumper & Splitter
+        const hw = L / 2, hh = W / 2;
+        const bumperBody = createRoundedRectShape(L, W, 5.5);
+
+        // Smooth rounded corner fog/brake-duct intakes
+        const intakeW = 6.0, intakeH = 6.2;
+        bumperBody.holes.push(createRoundedRectPath(intakeW, intakeH, 1.8, -hw + 5.8, -hh + 6.4));
+        bumperBody.holes.push(createRoundedRectPath(intakeW, intakeH, 1.8, hw - 5.8, -hh + 6.4));
+
+        const bumperMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(bumperBody, { depth: BASE_H, bevelEnabled: false, curveSegments: 18 }), matFrame);
+        bumperMesh.castShadow = true; bumperMesh.receiveShadow = true;
+        rootAssembly.add(tagPart(bumperMesh, 'frame'));
+
+        // Upper aero grille bar
+        const grilleMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createRoundedRectShape(L - 22, 2.0, 0.9, 0, hh - 3.2), { depth: FEATURE_H, bevelEnabled: false, curveSegments: 12 }), matHub);
+        grilleMesh.position.z = BASE_H;
+        rootAssembly.add(tagPart(grilleMesh, 'hub'));
+
+        // Central recessed license plate bay
+        const bayY = state.showOwnerName ? 1.0 : -0.4;
+        const bayH = state.showOwnerName ? (W - 14.5) : (W - 12.0);
+        const plateBayMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createRoundedRectShape(L - 20, bayH, 2.4, 0, bayY), { depth: FEATURE_H, bevelEnabled: false, curveSegments: 14 }), matBase);
+        plateBayMesh.position.z = BASE_H;
+        rootAssembly.add(tagPart(plateBayMesh, 'base'));
+
+        // Sculpted lower chin splitter accent
+        const splitterW = L - 8;
+        const splitterMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createRoundedRectShape(splitterW, 1.6, 0.7, 0, -hh + 2.0), { depth: FEATURE_H, bevelEnabled: false, curveSegments: 10 }), matHub);
+        splitterMesh.position.z = BASE_H;
+        rootAssembly.add(tagPart(splitterMesh, 'hub'));
+
+        if (state.showOwnerName && topClean.length > 0) {
+          const lipW = Math.min(L - 16, Math.max(26, topTabW));
+          const lipMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createTabShape(lipW, tabH, false, 2.8), { depth: FEATURE_H, bevelEnabled: false }), matCaliper);
+          lipMesh.position.set(0, -hh + 0.6, BASE_H);
+          rootAssembly.add(tagPart(lipMesh, 'caliper'));
+          placeNameText(topClean, 0, -hh + 0.6 + tabH / 2, BASE_H + 0.02, lipW - 5);
+        }
+        innerPlateShiftY = bayY;
+
+      } else if (shape === 'offroad_4x4') {
+        // Redesigned #4: Clean flush flange rivets (no awkward corner overlap) + optional name tab
+        skipEyeletLug = true;
+        const baseMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createOctagonShape(L, W, 5.5), { depth: BASE_H, bevelEnabled: false }), matBase);
+        baseMesh.castShadow = true; baseMesh.receiveShadow = true; rootAssembly.add(tagPart(baseMesh, 'base'));
+
+        const bezelOuter = createOctagonShape(L, W, 5.5);
+        bezelOuter.holes.push(createOctagonShape(L - 6.8, W - 6.8, 4.2));
+        const bezelMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(bezelOuter, { depth: FEATURE_H, bevelEnabled: false }), matFrame);
+        bezelMesh.position.z = BASE_H; rootAssembly.add(tagPart(bezelMesh, 'frame'));
+
+        // 4 neat compact flange rivets centered cleanly along the top & bottom bezel flats
+        [[-L / 2 + 9.0, W / 2 - 1.7], [L / 2 - 9.0, W / 2 - 1.7], [-L / 2 + 9.0, -W / 2 + 1.7], [L / 2 - 9.0, -W / 2 + 1.7]].forEach(([rx, ry]) => {
+          const rivet = new THREE.Shape(); rivet.absarc(rx, ry, 1.05, 0, Math.PI * 2, false);
+          const hexSocket = new THREE.Path();
+          for (let k = 0; k < 6; k++) {
+            const ang = (Math.PI / 3) * k;
+            const hx = rx + Math.cos(ang) * 0.45, hy = ry + Math.sin(ang) * 0.45;
+            if (k === 0) hexSocket.moveTo(hx, hy); else hexSocket.lineTo(hx, hy);
+          }
+          hexSocket.closePath(); rivet.holes.push(hexSocket);
+          const rMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(rivet, { depth: FEATURE_H + 0.2, bevelEnabled: false, curveSegments: 16 }), matHub);
+          rMesh.position.z = BASE_H; rootAssembly.add(tagPart(rMesh, 'hub'));
+        });
+
+        const barW = 24, barH = 6.2;
+        const barShape = new THREE.Shape();
+        barShape.moveTo(-barW/2, W/2 - 0.5); barShape.lineTo(-barW/2 + 2.2, W/2 + barH);
+        barShape.lineTo(barW/2 - 2.2, W/2 + barH); barShape.lineTo(barW/2, W/2 - 0.5); barShape.closePath();
+        const barSlot = new THREE.Path();
+        barSlot.moveTo(-barW/2 + 4.0, W/2 + 1.4); barSlot.lineTo(-barW/2 + 5.0, W/2 + barH - 2.2);
+        barSlot.lineTo(barW/2 - 5.0, W/2 + barH - 2.2); barSlot.lineTo(barW/2 - 4.0, W/2 + 1.4); barSlot.closePath();
+        barShape.holes.push(barSlot);
+        const barMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(barShape, { depth: TOTAL_H, bevelEnabled: false }), matFrame);
+        barMesh.castShadow = true; rootAssembly.add(tagPart(barMesh, 'frame'));
+
+        if (state.showOwnerName && topClean.length > 0) {
+          const skidW = Math.min(L - 18, topTabW);
+          const skidMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createTabShape(skidW, tabH, false, 3.0), { depth: FEATURE_H, bevelEnabled: false }), matCaliper);
+          skidMesh.position.set(0, -W / 2 + 3.2, BASE_H); rootAssembly.add(tagPart(skidMesh, 'caliper'));
+          placeNameText(topClean, 0, -W / 2 + 3.2 + tabH / 2, BASE_H + 0.02, skidW - 5);
+          innerPlateShiftY = 1.8;
+        } else {
+          innerPlateShiftY = 0;
+        }
+
+      } else if (shape === 'gt_spoiler') {
+        // Redesigned #7: Authentic, pocket-friendly GT Rear Wing Spoiler with swan-neck uprights & swept aero foil
+        const hw = L / 2, hh = W / 2;
+        const deckW = L - 8.0, deckH = W - 14.5, deckY = -hh + deckH / 2 + 1.2;
+
+        // Lower license plate deck
+        const bladeMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createRoundedRectShape(deckW, deckH, 3.0, 0, deckY), { depth: BASE_H, bevelEnabled: false, curveSegments: 16 }), matBase);
+        bladeMesh.castShadow = true; bladeMesh.receiveShadow = true; rootAssembly.add(tagPart(bladeMesh, 'base'));
+        const deckRim = createRoundedRectShape(deckW, deckH, 3.0, 0, deckY);
+        deckRim.holes.push(createRoundedRectPath(deckW - 3.4, deckH - 3.4, 1.8, 0, deckY));
+        const bRimMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(deckRim, { depth: FEATURE_H, bevelEnabled: false, curveSegments: 16 }), matFrame);
+        bRimMesh.position.z = BASE_H; rootAssembly.add(tagPart(bRimMesh, 'frame'));
+
+        // Twin billet swan-neck wing uprights connecting deck to upper GT wing
+        [-L * 0.23, L * 0.23].forEach(sx => {
+          const strut = new THREE.Shape();
+          strut.moveTo(sx - 2.6, deckY + deckH / 2 - 1.0);
+          strut.lineTo(sx + 2.6, deckY + deckH / 2 - 1.0);
+          strut.lineTo(sx + 1.8, hh - 5.2);
+          strut.lineTo(sx - 1.8, hh - 5.2);
+          strut.closePath();
+          rootAssembly.add(tagPart(new THREE.Mesh(new THREE.ExtrudeGeometry(strut, { depth: BASE_H, bevelEnabled: false }), matHub), 'hub'));
+        });
+
+        // Swept GT Wing Airfoil across the top with integrated chamfered endplates
+        const wingSpan = L - 2.0, wingH = Math.max(6.2, tabH + 1.8), archH = 2.8;
+        const wingY = hh - wingH - 1.2;
+        const upperWing = new THREE.Shape();
+        upperWing.moveTo(-wingSpan / 2 + 2.0, wingY);
+        upperWing.quadraticCurveTo(0, wingY + archH, wingSpan / 2 - 2.0, wingY);
+        upperWing.lineTo(wingSpan / 2, wingY + wingH - 1.5);
+        upperWing.quadraticCurveTo(0, wingY + wingH + archH, -wingSpan / 2, wingY + wingH - 1.5);
+        upperWing.closePath();
+        const uMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(upperWing, { depth: TOTAL_H, bevelEnabled: false, curveSegments: 24 }), matCaliper);
+        uMesh.castShadow = true; rootAssembly.add(tagPart(uMesh, 'caliper'));
+
+        // Sculpted aero endplate tips on left & right of wing
+        [-1, 1].forEach(dir => {
+          const tip = new THREE.Shape();
+          const tx = dir * (wingSpan / 2 - 0.5);
+          tip.moveTo(tx - dir * 3.0, wingY - 2.5);
+          tip.lineTo(tx + dir * 0.8, wingY - 1.5);
+          tip.lineTo(tx + dir * 1.4, wingY + wingH + 0.5);
+          tip.lineTo(tx - dir * 2.2, wingY + wingH + 0.5);
+          tip.closePath();
+          const tMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(tip, { depth: TOTAL_H + 0.25, bevelEnabled: false }), matFrame);
+          tMesh.castShadow = true; rootAssembly.add(tagPart(tMesh, 'frame'));
+        });
+
+        if (state.showOwnerName && topClean.length > 0) {
+          placeNameText(topClean, 0, wingY + wingH / 2 + archH * 0.68, BASE_H + 0.02, wingSpan - 12);
+        }
+        innerPlateShiftY = deckY;
+
+      } else if (shape === 'jdm_wing') {
+        if (state.showOwnerName && topClean.length > 0) {
+          const wingW = Math.min(L - 14, Math.max(24, topTabW)), wingH = tabH + 1.2;
+          const hw = L / 2, hh = W / 2 - 2.0, wingRight = hw, wingLeft = hw - wingW;
+          const jdmShape = new THREE.Shape();
+          jdmShape.moveTo(-hw + 2.5, -hh); jdmShape.lineTo(hw - 2.5, -hh);
+          jdmShape.quadraticCurveTo(hw, -hh, hw, -hh + 2.5);
+          jdmShape.lineTo(wingRight, hh + wingH - 2.0);
+          jdmShape.quadraticCurveTo(wingRight, hh + wingH, wingRight - 2.0, hh + wingH);
+          jdmShape.lineTo(wingLeft + 2.5, hh + wingH); jdmShape.lineTo(wingLeft - 2.5, hh);
+          jdmShape.lineTo(-hw + 2.5, hh); jdmShape.quadraticCurveTo(-hw, hh, -hw, hh - 2.5);
+          jdmShape.lineTo(-hw, -hh + 2.5); jdmShape.quadraticCurveTo(-hw, -hh, -hw + 2.5, -hh);
+
+          const baseMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(jdmShape, { depth: BASE_H, bevelEnabled: false }), matBase);
+          baseMesh.castShadow = true; baseMesh.receiveShadow = true; rootAssembly.add(tagPart(baseMesh, 'base'));
+          const frameOuter = jdmShape.clone();
+          frameOuter.holes.push(createRoundedRectPath(L - 3.6, (hh * 2) - 3.6, 1.8));
+          const fMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(frameOuter, { depth: FEATURE_H, bevelEnabled: false }), matFrame);
+          fMesh.position.z = BASE_H; rootAssembly.add(tagPart(fMesh, 'frame'));
+          placeNameText(topClean, wingLeft + wingW / 2, hh + wingH / 2 - 0.4, BASE_H + 0.02, wingW - 5);
+          innerPlateShiftY = -1.6;
+        } else {
+          const cornerR = 3.2;
+          const baseMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createRoundedRectShape(L - 0.6, W - 4.0, cornerR), { depth: BASE_H, bevelEnabled: false, curveSegments: 14 }), matBase);
+          baseMesh.castShadow = true; baseMesh.receiveShadow = true; rootAssembly.add(tagPart(baseMesh, 'base'));
+          const outerFrame = createRoundedRectShape(L, W - 3.4, cornerR);
+          outerFrame.holes.push(createRoundedRectPath(L - 3.6, W - 7.0, 1.8));
+          const fMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(outerFrame, { depth: FEATURE_H, bevelEnabled: false, curveSegments: 14 }), matFrame);
+          fMesh.position.z = BASE_H; rootAssembly.add(tagPart(fMesh, 'frame'));
+          innerPlateShiftY = 0;
+        }
+
+      } else if (shape === 'moto_fender') {
+        skipEyeletLug = true;
+        const hw = L / 2, hh = W / 2, archLift = 4.0;
+        const buildFenderContour = inset => {
+          const s = new THREE.Shape();
+          s.moveTo(-hw + 3.5 + inset, -hh + inset);
+          s.quadraticCurveTo(0, -hh + archLift + inset, hw - 3.5 - inset, -hh + inset);
+          s.lineTo(hw - inset, -hh + 6.5 + inset * 0.4);
+          s.quadraticCurveTo(hw * 0.72, hh - 2.0 - inset, 11.5 - inset * 0.5, hh - inset);
+          s.lineTo(-11.5 + inset * 0.5, hh - inset);
+          s.quadraticCurveTo(-hw * 0.72, hh - 2.0 - inset, -hw + inset, -hh + 6.5 + inset * 0.4);
+          s.closePath(); return s;
+        };
+        const buildFenderHolePath = inset => {
+          const p = new THREE.Path();
+          p.moveTo(-hw + 3.5 + inset, -hh + inset);
+          p.quadraticCurveTo(0, -hh + archLift + inset, hw - 3.5 - inset, -hh + inset);
+          p.lineTo(hw - inset, -hh + 6.5 + inset * 0.4);
+          p.quadraticCurveTo(hw * 0.72, hh - 2.0 - inset, 11.5 - inset * 0.5, hh - inset);
+          p.lineTo(-11.5 + inset * 0.5, hh - inset);
+          p.quadraticCurveTo(-hw * 0.72, hh - 2.0 - inset, -hw + inset, -hh + 6.5 + inset * 0.4);
+          p.closePath(); return p;
+        };
+
+        const fenderBase = buildFenderContour(0);
+        const topEyeletHole = new THREE.Path(); topEyeletHole.absarc(0, hh - 3.4, 1.9, 0, Math.PI * 2, true);
+        fenderBase.holes.push(topEyeletHole);
+        const baseMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(fenderBase, { depth: BASE_H, bevelEnabled: false, curveSegments: 24 }), matBase);
+        baseMesh.castShadow = true; baseMesh.receiveShadow = true; rootAssembly.add(tagPart(baseMesh, 'base'));
+
+        const fenderRim = buildFenderContour(0);
+        fenderRim.holes.push(buildFenderHolePath(2.0));
+        const rimMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(fenderRim, { depth: FEATURE_H, bevelEnabled: false, curveSegments: 24 }), matFrame);
+        rimMesh.position.z = BASE_H; rootAssembly.add(tagPart(rimMesh, 'frame'));
+
+        const collar = new THREE.Shape(); collar.absarc(0, hh - 3.4, 3.6, 0, Math.PI * 2, false);
+        const collarHole = new THREE.Path(); collarHole.absarc(0, hh - 3.4, 1.9, 0, Math.PI * 2, true);
+        collar.holes.push(collarHole);
+        const collarMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(collar, { depth: FEATURE_H, bevelEnabled: false, curveSegments: 24 }), matHub);
+        collarMesh.position.z = BASE_H; rootAssembly.add(tagPart(collarMesh, 'hub'));
+
+        if (state.showOwnerName && topClean.length > 0) {
+          const flapW = Math.min(L - 16, Math.max(24, topTabW)), flapH = tabH + 0.4;
+          const flapShape = new THREE.Shape();
+          flapShape.moveTo(-flapW / 2, -hh + 1.4); flapShape.quadraticCurveTo(0, -hh + archLift + 1.4, flapW / 2, -hh + 1.4);
+          flapShape.lineTo(flapW / 2 - 2.2, -hh + 1.4 + flapH); flapShape.quadraticCurveTo(0, -hh + archLift + 1.4 + flapH, -flapW / 2 + 2.2, -hh + 1.4 + flapH);
+          flapShape.closePath();
+          const flapMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(flapShape, { depth: FEATURE_H, bevelEnabled: false, curveSegments: 18 }), matCaliper);
+          flapMesh.position.z = BASE_H; rootAssembly.add(tagPart(flapMesh, 'caliper'));
+          placeNameText(topClean, 0, -hh + archLift * 0.72 + 1.4 + flapH / 2, BASE_H + 0.02, flapW - 5);
+          innerPlateShiftY = 0.8;
+        } else {
+          innerPlateShiftY = 0;
+        }
+
+      } else if (shape === 'fob_shield') {
+        skipEyeletLug = true;
+        const hw = L / 2, hh = W / 2;
+        const buildShieldShape = inset => {
+          const s = new THREE.Shape();
+          s.moveTo(-hw + 5 + inset, hh - inset); s.lineTo(hw - 5 - inset, hh - inset);
+          s.lineTo(hw - inset, hh - 7 - inset); s.lineTo(hw - 4 - inset, -hh + 4 + inset);
+          s.lineTo(0, -hh + inset); s.lineTo(-hw + 4 + inset, -hh + 4 + inset);
+          s.lineTo(-hw + inset, hh - 7 - inset); s.closePath(); return s;
+        };
+        const buildShieldHole = inset => {
+          const p = new THREE.Path();
+          p.moveTo(-hw + 5 + inset, hh - inset); p.lineTo(hw - 5 - inset, hh - inset);
+          p.lineTo(hw - inset, hh - 7 - inset); p.lineTo(hw - 4 - inset, -hh + 4 + inset);
+          p.lineTo(0, -hh + inset); p.lineTo(-hw + 4 + inset, -hh + 4 + inset);
+          p.lineTo(-hw + inset, hh - 7 - inset); p.closePath(); return p;
+        };
+        const shieldBase = buildShieldShape(0);
+        shieldBase.holes.push(createRoundedRectPath(18, 3.4, 1.5, 0, hh - 3.8));
+        const baseMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(shieldBase, { depth: BASE_H, bevelEnabled: false }), matBase);
+        baseMesh.castShadow = true; baseMesh.receiveShadow = true; rootAssembly.add(tagPart(baseMesh, 'base'));
+        const shieldRim = buildShieldShape(0);
+        shieldRim.holes.push(buildShieldHole(2.0));
+        const rimMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(shieldRim, { depth: FEATURE_H, bevelEnabled: false }), matFrame);
+        rimMesh.position.z = BASE_H; rootAssembly.add(tagPart(rimMesh, 'frame'));
+
+        if (state.showOwnerName && topClean.length > 0) {
+          const pillW = Math.min(L - 18, topTabW), pillH = tabH + 0.4, pillY = -hh + 5.2;
+          const pillMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createRoundedRectShape(pillW, pillH, pillH / 2 - 0.2, 0, pillY), { depth: FEATURE_H, bevelEnabled: false }), matCaliper);
+          pillMesh.position.z = BASE_H; rootAssembly.add(tagPart(pillMesh, 'caliper'));
+          placeNameText(topClean, 0, pillY, BASE_H + 0.02, pillW - 5);
+          innerPlateShiftY = 0.5;
+        } else {
+          innerPlateShiftY = -0.8;
+        }
+
+      } else {
+        const cornerR = 4.2;
+        const baseMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createRoundedRectShape(L - 0.6, W - 0.6, cornerR - 0.2), { depth: BASE_H, bevelEnabled: false, curveSegments: 16 }), matBase);
+        baseMesh.castShadow = true; baseMesh.receiveShadow = true; rootAssembly.add(tagPart(baseMesh, 'base'));
+
+        const outerFrame = createRoundedRectShape(L, W, cornerR);
+        outerFrame.holes.push(createRoundedRectPath(L - rimThickness * 2, W - rimThickness * 2, cornerR - 1.4));
+        const frameMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(outerFrame, { depth: FEATURE_H, bevelEnabled: true, bevelThickness: 0.14, bevelSize: 0.11, bevelSegments: 2, curveSegments: 16 }), matFrame);
+        frameMesh.position.z = BASE_H; frameMesh.castShadow = true; rootAssembly.add(tagPart(frameMesh, 'frame'));
+
+        const tabOffsetX = hasLogo ? 5 : 0;
+        if (state.showOwnerName && topClean.length > 0) {
+          const topTabMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createTabShape(topTabW, tabH, true, 3.2), { depth: FEATURE_H, bevelEnabled: false }), matCaliper);
+          topTabMesh.position.set(tabOffsetX, W / 2 - rimThickness + 0.05, BASE_H); rootAssembly.add(tagPart(topTabMesh, 'caliper'));
+          placeNameText(topClean, tabOffsetX, W / 2 - rimThickness - tabH / 2, BASE_H + 0.02, topTabW - 4, 'topName');
+        }
+        if (state.showOwnerName && state.sections === 2 && botClean.length > 0) {
+          const botTabW = Math.min(L - 10, Math.max(24, botClean.length * (state.nameFontSize * 1.1) + 11));
+          const botTabMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(createTabShape(botTabW, tabH, false, 3.2), { depth: FEATURE_H, bevelEnabled: false }), matCaliper);
+          botTabMesh.position.set(tabOffsetX, -W / 2 + rimThickness - 0.05, BASE_H); rootAssembly.add(tagPart(botTabMesh, 'caliper'));
+          placeNameText(botClean, tabOffsetX, -W / 2 + rimThickness + tabH / 2, BASE_H + 0.02, botTabW - 4, 'botName');
+        }
+        innerPlateShiftY = (!state.showOwnerName || state.sections === 2) ? 0 : -1.4;
+      }
+
+      // Keyring Hardware
+      const hardwareGroup = new THREE.Group();
+      if (!skipEyeletLug) {
+        const lugOuter = new THREE.Shape(); lugOuter.absarc(0, 0, 4.3, 0, Math.PI * 2, false);
+        const lugHole = new THREE.Path(); lugHole.absarc(0, 0, 1.9, 0, Math.PI * 2, true);
+        lugOuter.holes.push(lugHole);
+        const lugMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(lugOuter, { depth: TOTAL_H, bevelEnabled: false, curveSegments: 24 }), matFrame);
+        lugMesh.castShadow = true;
+        const lugLeftX = -L / 2 - 1.6;
+        lugMesh.position.set(state.eyeletPos === 'left' ? lugLeftX : 0, state.eyeletPos === 'left' ? 0 : W / 2 + 1.6, 0);
+        rootAssembly.add(tagPart(lugMesh, 'frame'));
+
+        const jumpRing = new THREE.Mesh(new THREE.TorusGeometry(2.3, 0.48, 12, 24), metalMat);
+        const splitRing1 = new THREE.Mesh(new THREE.TorusGeometry(8.2, 0.72, 14, 36), metalMat);
+        const splitRing2 = new THREE.Mesh(new THREE.TorusGeometry(8.2, 0.65, 14, 36), metalMat);
+        if (state.eyeletPos === 'left') {
+          jumpRing.position.set(lugLeftX - 2.8, 0, TOTAL_H / 2); jumpRing.rotation.x = Math.PI / 2;
+          splitRing1.position.set(lugLeftX - 12.2, 0, TOTAL_H / 2);
+          splitRing2.position.set(lugLeftX - 12.2, 0, TOTAL_H / 2 + 0.65);
+        } else {
+          jumpRing.position.set(0, W / 2 + 4.4, TOTAL_H / 2); jumpRing.rotation.y = Math.PI / 2;
+          splitRing1.position.set(0, W / 2 + 13.8, TOTAL_H / 2);
+          splitRing2.position.set(0, W / 2 + 13.8, TOTAL_H / 2 + 0.65);
+        }
+        hardwareGroup.add(jumpRing, splitRing1, splitRing2);
+      } else if (shape === 'moto_fender') {
+        const hh = W / 2;
+        const topJump = new THREE.Mesh(new THREE.TorusGeometry(2.3, 0.48, 12, 24), metalMat);
+        topJump.position.set(0, hh - 0.5, TOTAL_H / 2); topJump.rotation.y = Math.PI / 2;
+        const topSplit1 = new THREE.Mesh(new THREE.TorusGeometry(8.2, 0.72, 14, 36), metalMat);
+        topSplit1.position.set(0, hh + 9.2, TOTAL_H / 2);
+        const topSplit2 = new THREE.Mesh(new THREE.TorusGeometry(8.2, 0.65, 14, 36), metalMat);
+        topSplit2.position.set(0, hh + 9.2, TOTAL_H / 2 + 0.65);
+        hardwareGroup.add(topJump, topSplit1, topSplit2);
+      }
+      rootAssembly.add(hardwareGroup);
+
+      // OEM Logo Placeholder + Brand Subtext + Vehicle Number (Non-Rotor Shapes)
+      if (shape !== 'brake_rotor') {
+        const sideMargin = shape === 'car_bumper' ? 9.8 : (shape === 'hex_floating' || shape === 'moto_fender' || shape === 'fob_shield') ? 7.5 : shape === 'gt_spoiler' ? 5.2 : 2.2;
+        const innerLeft = -L / 2 + rimThickness + sideMargin + Math.max(0, innerPlateShiftX);
+        const innerRight = L / 2 - rimThickness - sideMargin + Math.min(0, innerPlateShiftX);
+        let textZoneLeft = innerLeft;
+        const featureZBase = BASE_H;
+
+        if (hasLogo) {
+          const showSub = state.showLogoSubtext && subClean.length > 0;
+          const logoBoxW = 12.2;
+          const logoBoxH = showSub ? 9.0 : 12.0;
+          const logoObj = buildOemLogoPlaceholderGroup(logoBoxW, logoBoxH, FEATURE_H, matLogo);
+          const logoCenterX = innerLeft + logoBoxW / 2 + 0.3;
+          logoObj.position.set(logoCenterX, (showSub ? 1.8 : 0) + innerPlateShiftY, featureZBase);
+          tagPart(logoObj, 'logo');
+          rootAssembly.add(logoObj);
+
+          if (showSub) {
+            const subGeo = buildSolidTextGeometry(subClean, state.subtextFont, state.subtextFontSize, FEATURE_H);
+            if (subGeo) {
+              subGeo.computeBoundingBox();
+              const sw = subGeo.boundingBox.max.x - subGeo.boundingBox.min.x;
+              if (sw > logoBoxW + 1.5) subGeo.scale((logoBoxW + 1.5) / sw, (logoBoxW + 1.5) / sw, 1);
+              const subMesh = new THREE.Mesh(subGeo, matSub);
+              subMesh.position.set(logoCenterX, -5.6 + innerPlateShiftY, featureZBase);
+              tagPart(subMesh, 'subtext');
+              rootAssembly.add(subMesh);
+            }
+          }
+          textZoneLeft = innerLeft + logoBoxW + 2.6;
+        }
+
+        const availTextW = Math.max(18, innerRight - textZoneLeft);
+        const textCenterX = (textZoneLeft + innerRight) / 2;
+        const plateBundle = new THREE.Group();
+
+        if (state.lineMode === '2') {
+          const parts = plateClean.split(/\s+/), mid = Math.ceil(parts.length / 2);
+          const g1 = buildSolidTextGeometry(parts.slice(0, mid).join(' '), state.plateFont, state.plateFontSize * 0.85, FEATURE_H);
+          const g2 = buildSolidTextGeometry(parts.slice(mid).join(' '), state.plateFont, state.plateFontSize, FEATURE_H);
+          [{ g: g1, y: (state.plateFontSize * 0.65) + innerPlateShiftY }, { g: g2, y: -(state.plateFontSize * 0.65) + innerPlateShiftY }].forEach(item => {
+            if (!item.g) return;
+            item.g.computeBoundingBox();
+            const w = item.g.boundingBox.max.x - item.g.boundingBox.min.x;
+            if (w > availTextW) item.g.scale(availTextW / w, availTextW / w, 1);
+            const m = new THREE.Mesh(item.g, matPlate);
+            m.position.set(textCenterX, item.y, featureZBase);
+            m.castShadow = true; plateBundle.add(m);
+          });
+        } else {
+          const numGeo = buildSolidTextGeometry(plateClean, state.plateFont, state.plateFontSize, FEATURE_H);
+          if (numGeo) {
+            numGeo.computeBoundingBox();
+            const w = numGeo.boundingBox.max.x - numGeo.boundingBox.min.x;
+            if (w > availTextW) numGeo.scale(availTextW / w, availTextW / w, 1);
+            const numMesh = new THREE.Mesh(numGeo, matPlate);
+            numMesh.position.set(textCenterX, innerPlateShiftY, featureZBase);
+            numMesh.castShadow = true; plateBundle.add(numMesh);
+          }
+        }
+        if (plateBundle.children.length > 0) {
+          tagPart(plateBundle, 'plate');
+          rootAssembly.add(plateBundle);
+        }
+      }
+
+      rootAssembly.position.z = 0.02;
+      rootAssembly.updateMatrixWorld(true);
+      const bb = new THREE.Box3();
+      rootAssembly.traverse(c => { if (c.isMesh && c.userData.partKey) bb.expandByObject(c); });
+      const s = bb.getSize(new THREE.Vector3());
+      state.measuredDims = `${s.x.toFixed(1)} × ${s.y.toFixed(1)} × ${s.z.toFixed(1)} mm`;
+      const finishLabel = (state.shapeStyle === 'brake_rotor' || state.printMode === 'faceup') ? 'Raised 3D' : 'Flush Matte';
+      document.getElementById('dimReadout').textContent = `${state.measuredDims} • ${finishLabel}`;
+      updateFinishDescription();
+    }
+
+    // ---------------------------------------------------------
+    // INTERACTION MODES: ROTATE / TAP TO COLOR
+    // ---------------------------------------------------------
+    const raycaster = new THREE.Raycaster();
+    const pointerNDC = new THREE.Vector2();
+
+    function setInteractionMode(mode) {
+      state.interactionMode = mode;
+      const isPaint = mode === 'paint';
+      controls.enabled = !isPaint;
+      document.getElementById('orbitModeBtn').classList.toggle('active', !isPaint);
+      document.getElementById('paintModeBtn').classList.toggle('paint-active', isPaint);
+      document.getElementById('paintInspector').classList.toggle('visible', isPaint && !!state.selectedPartKey);
+      renderer.domElement.style.cursor = isPaint ? 'crosshair' : 'grab';
+      document.getElementById('dragStatusText').innerHTML = isPaint
+        ? '<strong style="color:#f472b6;">Tap any part</strong> on the keychain to pick its color!'
+        : 'Drag to rotate 3D preview &bull; Scroll to zoom';
+    }
+
+    document.getElementById('orbitModeBtn').addEventListener('click', () => setInteractionMode('orbit'));
+    document.getElementById('paintModeBtn').addEventListener('click', () => setInteractionMode('paint'));
+    document.getElementById('resetCamBtn').addEventListener('click', () => {
+      camera.position.set(0, -48, 86);
+      controls.target.set(0, 0, 0);
+      controls.update();
+    });
+
+    renderer.domElement.addEventListener('pointerdown', e => {
+      if (state.interactionMode !== 'paint') return;
+      const rect = renderer.domElement.getBoundingClientRect();
+      pointerNDC.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      pointerNDC.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(pointerNDC, camera);
+      const hits = raycaster.intersectObjects(paintableMeshes, false);
+      if (hits.length > 0 && hits[0].object.userData.partKey) {
+        selectPartForPainting(hits[0].object.userData.partKey);
+      }
+    });
+
+    // ---------------------------------------------------------
+    // INPUT BINDINGS
+    // ---------------------------------------------------------
+    function setShowOwnerName(val) {
+      state.showOwnerName = val;
+      document.getElementById('quickShowOwnerName').checked = val;
+      document.getElementById('showOwnerNameToggle').checked = val;
+      document.getElementById('quickNameWrap').style.display = val ? 'flex' : 'none';
+      document.getElementById('topName').disabled = !val;
+      document.getElementById('topName').style.opacity = val ? '1' : '0.45';
+      document.getElementById('sectionToggleWrap').style.display = val ? 'flex' : 'none';
+      document.getElementById('bottomNameWrap').style.display = (val && state.sections === 2) ? 'flex' : 'none';
+      rebuildMesh();
+    }
+    document.getElementById('quickShowOwnerName').addEventListener('change', e => setShowOwnerName(e.target.checked));
+    document.getElementById('showOwnerNameToggle').addEventListener('change', e => setShowOwnerName(e.target.checked));
+    document.getElementById('showLogoSubtext').addEventListener('change', e => { state.showLogoSubtext = e.target.checked; rebuildMesh(); });
+    document.getElementById('logoSubtextInput').addEventListener('input', e => { state.logoSubtext = e.target.value; rebuildMesh(); });
+
+    document.querySelectorAll('#sectionToggle .seg-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#sectionToggle .seg-opt').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.sections = parseInt(btn.dataset.val, 10);
+        document.getElementById('bottomNameWrap').style.display = state.sections === 2 ? 'flex' : 'none';
+        rebuildMesh();
+      });
+    });
+
+    document.getElementById('quickPlate').addEventListener('input', e => { state.plateNumber = e.target.value; document.getElementById('plateNumber').value = e.target.value; rebuildMesh(); });
+    document.getElementById('plateNumber').addEventListener('input', e => { state.plateNumber = e.target.value; document.getElementById('quickPlate').value = e.target.value; rebuildMesh(); });
+    document.getElementById('quickName').addEventListener('input', e => { state.topName = e.target.value; document.getElementById('topName').value = e.target.value; rebuildMesh(); });
+    document.getElementById('topName').addEventListener('input', e => { state.topName = e.target.value; document.getElementById('quickName').value = e.target.value; rebuildMesh(); });
+    document.getElementById('bottomName').addEventListener('input', e => { state.bottomName = e.target.value; rebuildMesh(); });
+    document.getElementById('lineMode').addEventListener('change', e => { state.lineMode = e.target.value; rebuildMesh(); });
+    document.getElementById('eyeletPos').addEventListener('change', e => { state.eyeletPos = e.target.value; rebuildMesh(); });
+
+    document.getElementById('plateFontSize').addEventListener('input', e => {
+      state.plateFontSize = parseFloat(e.target.value);
+      document.getElementById('plateSizeVal').textContent = `${state.plateFontSize.toFixed(1)} mm`;
+      rebuildMesh();
+    });
+    document.getElementById('nameFontSize').addEventListener('input', e => {
+      state.nameFontSize = parseFloat(e.target.value);
+      document.getElementById('nameSizeVal').textContent = `${state.nameFontSize.toFixed(1)} mm`;
+      rebuildMesh();
+    });
+
+    ['colBase', 'colFrame', 'colText', 'colName'].forEach(id => {
+      document.getElementById(id).addEventListener('input', e => {
+        state[id] = e.target.value;
+        renderPartColorList();
+        rebuildMesh();
+      });
+    });
+
+    document.querySelectorAll('.swatch-btn').forEach(pill => {
+      pill.addEventListener('click', () => {
+        const [b, f, t, n] = pill.dataset.p.split(',');
+        state.colBase = b; state.colFrame = f; state.colText = t; state.colName = n;
+        state.partColors = {};
+        syncUiFromState();
+        rebuildMesh();
+      });
+    });
+
+    document.querySelectorAll('[data-bg]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-bg]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyBackgroundTheme(btn.dataset.bg);
+      });
+    });
+
+    function updateFinishDescription() {
+      const el = document.getElementById('finishDescText');
+      if (!el) return;
+      if (state.shapeStyle === 'brake_rotor') {
+        el.innerHTML = '<strong>Raised 3D (Spinning Disc):</strong> The spinning brake disc &amp; caliper are always crafted in crisp 3D relief.';
+      } else if (state.printMode === 'facedown') {
+        el.innerHTML = '<strong>Flush Matte (Printed Face-Down):</strong> Smooth, completely flat surface with a subtle matte sparkle and zero raised edges.';
+      } else {
+        el.innerHTML = '<strong>Raised 3D (Printed Face-Up):</strong> Letters, logo &amp; border pop out in 3D relief — bold tactile feel you can trace with your fingers.';
+      }
+    }
+
+    document.querySelectorAll('#printModeToggle .seg-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#printModeToggle .seg-opt').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.printMode = btn.dataset.val;
+        updateFinishDescription();
+        rebuildMesh();
+      });
+    });
+
+    document.getElementById('spinRotorToggle').addEventListener('change', e => { state.spinRotorDemo = e.target.checked; });
+    document.getElementById('rotorPatternSelect').addEventListener('change', e => { state.rotorPattern = e.target.value; rebuildMesh(); });
+
+    // ---------------------------------------------------------
+    // CUSTOMER QUERY FLOW (WHATSAPP / IG DM COPY / EMAIL)
+    // ---------------------------------------------------------
+    function buildQueryText() {
+      const styleObj = STRUCTURAL_SHAPES.find(s => s.id === state.shapeStyle);
+      const brandObj = OEM_BRANDS[state.brandKey];
+      const cName = document.getElementById('custName').value.trim() || 'Customer';
+      const cPhone = document.getElementById('custPhone').value.trim();
+      const cQty = document.getElementById('custQty').value;
+      const cNotes = document.getElementById('custNotes').value.trim();
+
+      const customParts = Object.entries(state.partColors).map(([k, v]) => {
+        const def = PART_DEFINITIONS.find(d => d.key === k);
+        return `${def ? def.label : k}: ${v}`;
+      });
+
+      const lines = [
+        `*New Custom Keychain Query — ${SELLER_CONFIG.brandName}*`,
+        `Customer: ${cName}${cPhone ? ` (${cPhone})` : ''}`,
+        `Quantity: ${cQty}`,
+        `---`,
+        `Style: ${styleObj ? styleObj.title : state.shapeStyle}`,
+        state.shapeStyle === 'brake_rotor' ? `Rotor Pattern: ${state.rotorPattern}` : null,
+        `Vehicle Brand (OEM Logo): ${brandObj ? brandObj.name : state.brandKey}`,
+        state.showLogoSubtext && state.logoSubtext ? `Brand Tag: ${state.logoSubtext.toUpperCase()}` : null,
+        `Vehicle Number: ${state.plateNumber.toUpperCase()} (${state.lineMode}-Line)`,
+        `Owner Name: ${state.showOwnerName ? (state.topName.toUpperCase() || 'None') : 'Not Required (Clean Look)'}`,
+        state.showOwnerName && state.sections === 2 && state.bottomName ? `Secondary Tag: ${state.bottomName.toUpperCase()}` : null,
+        `Fonts: Plate=${state.plateFont} (${state.plateFontSize}mm) | Name=${state.nameFont} (${state.nameFontSize}mm)`,
+        `Colors: Base ${state.colBase} | Body ${state.colFrame} | Text ${state.colText} | Name ${state.colName}`,
+        customParts.length ? `Custom Part Colors: ${customParts.join(', ')}` : null,
+        `Surface Finish: ${(state.shapeStyle === 'brake_rotor' || state.printMode === 'faceup') ? 'Raised 3D (Face-Up)' : 'Flush Matte (Face-Down)'}`,
+        `Keyring Loop: ${state.eyeletPos === 'top' ? 'Top Center' : 'Left Side'}`,
+        `Est. Size: ${state.measuredDims || ''}`,
+        cNotes ? `Notes: ${cNotes}` : null
+      ].filter(Boolean);
+
+      return lines.join('\n');
+    }
+
+    const queryModal = document.getElementById('queryModal');
+    document.getElementById('openQueryModalBtn').addEventListener('click', () => {
+      renderer.render(scene, camera);
+      document.getElementById('modalSnapshotImg').src = renderer.domElement.toDataURL('image/png');
+      const styleObj = STRUCTURAL_SHAPES.find(s => s.id === state.shapeStyle);
+      const brandObj = OEM_BRANDS[state.brandKey];
+      document.getElementById('modalSpecSummary').innerHTML = `
+        <strong>${styleObj ? styleObj.title : ''}</strong><br>
+        Plate: <strong>${state.plateNumber.toUpperCase()}</strong> (${state.lineMode}-Line)<br>
+        Name: <strong>${state.showOwnerName ? (state.topName.toUpperCase() || '—') : 'Not Required'}</strong><br>
+        OEM Brand: <strong>${brandObj ? brandObj.name : ''}</strong><br>
+        Finish: <strong>${(state.shapeStyle === 'brake_rotor' || state.printMode === 'faceup') ? 'Raised 3D (Face-Up)' : 'Flush Matte (Face-Down)'}</strong><br>
+        Size: <strong>${state.measuredDims || ''}</strong>
+      `;
+      queryModal.classList.add('open');
+    });
+
+    document.getElementById('closeModalBtn').addEventListener('click', () => queryModal.classList.remove('open'));
+    queryModal.addEventListener('click', e => { if (e.target === queryModal) queryModal.classList.remove('open'); });
+
+    document.getElementById('sendWhatsAppBtn').addEventListener('click', () => {
+      const msg = encodeURIComponent(buildQueryText());
+      window.open(`https://wa.me/${SELLER_CONFIG.whatsappNumber}?text=${msg}`, '_blank', 'noopener');
+      showToast('Opening WhatsApp with your design!');
+    });
+
+    document.getElementById('copyQueryBtn').addEventListener('click', () => {
+      const text = buildQueryText();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(`Copied! Paste in DM to ${SELLER_CONFIG.instagramHandle}`));
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast(`Copied! Paste in DM to ${SELLER_CONFIG.instagramHandle}`);
+      }
+    });
+
+    document.getElementById('sendEmailBtn').addEventListener('click', () => {
+      const subject = encodeURIComponent(`Custom 3D Keychain Query - ${state.plateNumber.toUpperCase()}`);
+      const body = encodeURIComponent(buildQueryText());
+      window.location.href = `mailto:${SELLER_CONFIG.email}?subject=${subject}&body=${body}`;
+      showToast('Opening your email app...');
+    });
+
+    document.getElementById('saveMockupBtn').addEventListener('click', () => {
+      renderer.render(scene, camera);
+      renderer.domElement.toBlob(blob => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `My_Keychain_${state.plateNumber.replace(/\s+/g, '_') || 'Preview'}.png`;
+        a.click();
+        showToast('Preview image saved!');
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (rotorSpinGroup && state.spinRotorDemo && state.shapeStyle === 'brake_rotor') {
+        rotorSpinGroup.rotation.z -= 0.012;
+      }
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    document.fonts.ready.then(() => { rebuildMesh(); animate(); });
+  </script>
+</body>
+</html>
